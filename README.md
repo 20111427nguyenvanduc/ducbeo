@@ -23,7 +23,7 @@
 
 ### 1.3 Điểm khác biệt
 
-- Mỗi Công ty BĐS có **domain riêng** được cấp phát bởi Admin (vd: `congtyabc.bdsnen.vn`).
+- Mỗi Công ty BĐS có **domain riêng** được cấp phát bởi Admin (vd: `congtyabc.bdshy.vn`).
 - Hệ thống tách biệt **Tài sản** và **Tin đăng** — 1 tài sản có thể có nhiều tin đăng, tránh spam, dễ quản lý.
 - **Đơn tư vấn** có vòng đời đầy đủ từ Chờ tư vấn → Hoàn thành, được theo dõi realtime.
 - Admin có **job tự động** nhắc nhở Công ty BĐS khi đơn tư vấn bị bỏ quên.
@@ -34,15 +34,15 @@
 ┌───────────────┐  ┌──────────────────┐  ┌──────────────────────┐  ┌────────────────┐
 │  Landing Page │  │  Web + Mobile    │  │  Company Portal      │  │  Admin System  │
 │  (WordPress)  │  │  App             │  │  (Công ty BĐS)       │  │  (Quản trị)    │
-│               │  │  (Người mua/bán) │  │  congtyabc.bdsnen.vn │  │                │
-│  bdsnen.vn    │  │  app.bdsnen.vn   │  │  congtyxyz.bdsnen.vn │  │ admin.bdsnen   │
+│               │  │  (Người mua/bán) │  │  congtyabc.bdshy.vn  │  │                │
+│  bdshy.vn     │  │  app.bdshy.vn    │  │  congtyxyz.bdshy.vn  │  │ admin.bdshy    │
 └──────┬────────┘  └───────┬──────────┘  └──────────┬───────────┘  └───────┬────────┘
        │                   │                         │                      │
        └───────────────────┴─────────────────────────┴──────────────────────┘
                                            │
                               ┌────────────▼────────────┐
                               │       Backend API        │
-                              │   api.bdsnen.vn          │
+                              │   api.bdshy.vn           │
                               │   (Node.js + Express)    │
                               └────────────┬────────────┘
                                            │
@@ -238,7 +238,7 @@ Dành cho người có tài sản muốn nhờ sàn tìm người mua.
 
 **Đăng nhập:** Username + Password (do Admin cấp).
 
-**Truy cập:** Domain riêng do Admin cấp, ví dụ `congtyabc.bdsnen.vn`.
+**Truy cập:** Domain riêng do Admin cấp, ví dụ `congtyabc.bdshy.vn`.
 
 **Công nghệ:** ReactJS + Vite + Tailwind CSS.
 
@@ -254,19 +254,7 @@ Dành cho người có tài sản muốn nhờ sàn tìm người mua.
 
 ---
 
-#### 🖥️ Màn 2 — Verify OTP
-
-Xác thực 2 lớp khi đăng nhập.
-
-**Hiển thị:**
-- Thông báo "Mã OTP đã được gửi đến SĐT đăng ký: 09xx xxx xxx"
-- Ô nhập mã OTP (6 số)
-- Nút "Xác nhận"
-- Nút "Gửi lại OTP" (sau 60 giây)
-
----
-
-#### 🖥️ Màn 3 — Đổi Mật Khẩu Lần Đầu
+#### 🖥️ Màn 2 — Đổi Mật Khẩu Lần Đầu
 
 Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 
@@ -277,15 +265,16 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 
 ---
 
-#### 🖥️ Màn 4 — Quên Mật Khẩu
+#### 🖥️ Màn 3 — Quên Mật Khẩu
 
 **Hiển thị:**
-- Nhập Username hoặc Email
-- Hệ thống gửi link reset về email đăng ký
+- Bước 1: Nhập Username hoặc SĐT đăng ký
+- Bước 2: Nhận mã OTP qua SMS → Nhập OTP xác nhận
+- Bước 3: Nhập mật khẩu mới
 
 ---
 
-#### 🖥️ Màn 5 — Dashboard Tổng Quan
+#### 🖥️ Màn 4 — Dashboard Tổng Quan
 
 **Hiển thị:**
 - Lời chào: "Xin chào, [Tên Công ty]!"
@@ -305,7 +294,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 
 ---
 
-#### 🖥️ Màn 6 — Quản Lý Tài Sản
+#### 🖥️ Màn 5 — Quản Lý Tài Sản
 
 **Mục đích:** Quản lý danh sách tài sản BĐS của công ty. Mỗi tin đăng sẽ liên kết với 1 tài sản, tránh đăng trùng lặp, dễ kiểm soát.
 
@@ -332,7 +321,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 
 ---
 
-#### 🖥️ Màn 7 — Quản Lý Tin Đăng
+#### 🖥️ Màn 6 — Quản Lý Tin Đăng
 
 **Mục đích:** Quản lý các tin rao bán được đăng lên sàn. Mỗi tin liên kết với 1 tài sản.
 
@@ -357,7 +346,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 
 ---
 
-#### 🖥️ Màn 8 — Quản Lý Đơn Tư Vấn
+#### 🖥️ Màn 7 — Quản Lý Đơn Tư Vấn
 
 **Mục đích:** Xem và cập nhật trạng thái tất cả đơn tư vấn mà khách hàng để lại cho các tin đăng của công ty.
 
@@ -383,7 +372,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 
 ---
 
-#### 🖥️ Màn 9 — Hồ Sơ Công Ty
+#### 🖥️ Màn 8 — Hồ Sơ Công Ty
 
 **Hiển thị:** Logo, Tên công ty, SĐT, Địa chỉ, Domain được cấp
 
@@ -419,7 +408,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 **Hiển thị:** Danh sách công ty, domain được cấp, trạng thái, ngày tạo, số tin đăng, số đơn tư vấn
 
 **Admin có thể:**
-- **Tạo tài khoản mới** cho Công ty BĐS: nhập thông tin công ty, cấp username/password tạm thời, cấp domain riêng (vd: `congtyabc.bdsnen.vn`)
+- **Tạo tài khoản mới** cho Công ty BĐS: nhập thông tin công ty, cấp username/password tạm thời, cấp domain riêng (vd: `congtyabc.bdshy.vn`)
 - Chỉnh sửa thông tin công ty
 - Khoá / Mở khoá tài khoản
 - Xoá công ty
@@ -523,18 +512,18 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 ### Luồng 1 — Công ty BĐS được onboard và đăng tin
 ```
 [Công ty] Liên hệ qua Landing Page
-[Admin]   Tạo tài khoản, cấp domain riêng (congtyabc.bdsnen.vn)
+[Admin]   Tạo tài khoản, cấp domain riêng (congtyabc.bdshy.vn)
           Gửi thông tin đăng nhập cho Công ty
-[Công ty] Truy cập congtyabc.bdsnen.vn → Đăng nhập
-          → Verify OTP → Đổi mật khẩu lần đầu
+[Công ty] Truy cập congtyabc.bdshy.vn → Đăng nhập
+          → Đổi mật khẩu lần đầu
           → Thêm tài sản vào hệ thống
           → Tạo tin đăng → Chọn tài sản → Điền tiêu đề, mô tả → Gửi duyệt
-[Admin]   Duyệt tin → Tin hiển thị lên sàn app.bdsnen.vn
+[Admin]   Duyệt tin → Tin hiển thị lên sàn app.bdshy.vn
 ```
 
 ### Luồng 2 — Người mua tìm kiếm và gửi yêu cầu tư vấn
 ```
-[Người mua] Vào app.bdsnen.vn hoặc Mobile App
+[Người mua] Vào app.bdshy.vn hoặc Mobile App
             → Xem danh sách / Tìm kiếm / Lọc
             → Xem Chi tiết BĐS
             → Bấm "GỬI YÊU CẦU TƯ VẤN"
@@ -593,20 +582,19 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 | # | Chức năng |
 |---|---|
 | 1 | Đăng nhập bằng Username + Password |
-| 2 | Xác thực OTP 2 lớp |
-| 3 | Đổi mật khẩu lần đầu (bắt buộc) |
-| 4 | Quên mật khẩu / Đặt lại mật khẩu |
-| 5 | Xem Dashboard tổng quan |
-| 6 | Thêm / Sửa / Xoá tài sản |
-| 7 | Quản lý ảnh tài sản |
-| 8 | Tạo tin đăng liên kết với tài sản |
-| 9 | Chỉnh sửa / Xoá / Gia hạn tin đăng |
-| 10 | Xem danh sách đơn tư vấn |
-| 11 | Lọc đơn theo tin đăng / trạng thái |
-| 12 | Cập nhật trạng thái đơn tư vấn |
-| 13 | Thêm ghi chú nội bộ vào đơn |
-| 14 | Nhận thông báo realtime khi có đơn mới |
-| 15 | Cập nhật hồ sơ công ty |
+| 2 | Đổi mật khẩu lần đầu (bắt buộc) |
+| 3 | Quên mật khẩu / Đặt lại mật khẩu |
+| 4 | Xem Dashboard tổng quan |
+| 5 | Thêm / Sửa / Xoá tài sản |
+| 6 | Quản lý ảnh tài sản |
+| 7 | Tạo tin đăng liên kết với tài sản |
+| 8 | Chỉnh sửa / Xoá / Gia hạn tin đăng |
+| 9 | Xem danh sách đơn tư vấn |
+| 10 | Lọc đơn theo tin đăng / trạng thái |
+| 11 | Cập nhật trạng thái đơn tư vấn |
+| 12 | Thêm ghi chú nội bộ vào đơn |
+| 13 | Nhận thông báo realtime khi có đơn mới |
+| 14 | Cập nhật hồ sơ công ty |
 
 ### 🔑 Admin
 
@@ -655,17 +643,16 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 | # | Tên màn | Mô tả ngắn |
 |---|---|---|
 | C01 | Đăng Nhập | Username + Password |
-| C02 | Verify OTP | Xác thực 2 lớp |
-| C03 | Đổi Mật Khẩu Lần Đầu | Bắt buộc khi đăng nhập lần đầu |
-| C04 | Quên Mật Khẩu | Reset qua email |
-| C05 | Dashboard Tổng Quan | Thống kê + đơn mới + tin hết hạn |
-| C06 | Quản Lý Tài Sản | Danh sách + thêm/sửa/xoá tài sản |
-| C07 | Chi Tiết / Tạo / Sửa Tài Sản | Form nhập đầy đủ thông tin tài sản |
-| C08 | Quản Lý Tin Đăng | Danh sách tin theo trạng thái |
-| C09 | Tạo / Sửa Tin Đăng | Chọn tài sản + tiêu đề, mô tả + hạn |
-| C10 | Quản Lý Đơn Tư Vấn | Danh sách đơn + cập nhật trạng thái |
-| C11 | Chi Tiết Đơn Tư Vấn | Thông tin khách + timeline trạng thái |
-| C12 | Hồ Sơ Công Ty | Thông tin + đổi mật khẩu |
+| C02 | Đổi Mật Khẩu Lần Đầu | Bắt buộc khi đăng nhập lần đầu |
+| C03 | Quên Mật Khẩu | Reset qua SMS OTP |
+| C04 | Dashboard Tổng Quan | Thống kê + đơn mới + tin hết hạn |
+| C05 | Quản Lý Tài Sản | Danh sách + thêm/sửa/xoá tài sản |
+| C06 | Chi Tiết / Tạo / Sửa Tài Sản | Form nhập đầy đủ thông tin tài sản |
+| C07 | Quản Lý Tin Đăng | Danh sách tin theo trạng thái |
+| C08 | Tạo / Sửa Tin Đăng | Chọn tài sản + tiêu đề, mô tả + hạn |
+| C09 | Quản Lý Đơn Tư Vấn | Danh sách đơn + cập nhật trạng thái |
+| C10 | Chi Tiết Đơn Tư Vấn | Thông tin khách + timeline trạng thái |
+| C11 | Hồ Sơ Công Ty | Thông tin + đổi mật khẩu |
 
 ### ⚙️ Admin System
 
@@ -711,11 +698,11 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 
 | Hệ thống | Domain |
 |---|---|
-| Landing Page | bdsnen.vn |
-| Web App (Người mua) | app.bdsnen.vn |
-| Company Portal | [tencongty].bdsnen.vn (cấp riêng cho từng công ty) |
-| Admin System | admin.bdsnen.vn |
-| Backend API | api.bdsnen.vn |
+| Landing Page | bdshy.vn |
+| Web App (Người mua) | app.bdshy.vn |
+| Company Portal | [tencongty].bdshy.vn (cấp riêng cho từng công ty) |
+| Admin System | admin.bdshy.vn |
+| Backend API | api.bdshy.vn |
 
 ### Cấu trúc thư mục (Monorepo)
 ```
