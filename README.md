@@ -33,11 +33,12 @@
 ```
 ┌───────────────┐  ┌──────────────────┐  ┌──────────────────────┐  ┌────────────────┐
 │  Landing Page │  │  Web + Mobile    │  │  Company Portal      │  │  Admin System  │
-│  (WordPress)  │  │  App             │  │  (Công ty BĐS)       │  │  (Quản trị)    │
-│               │  │  (Người mua/bán) │  │  congtyabc.bdshy.vn  │  │                │
-│  bdshy.vn     │  │  app.bdshy.vn    │  │  congtyxyz.bdshy.vn  │  │ admin.bdshy    │
+│  (WordPress)  │──▶  App             │  │  (Công ty BĐS)       │  │  (Quản trị)    │
+│  bdshy.vn     │  │  (Người mua/bán) │  │  congtyabc.bdshy.vn  │  │                │
+│  [CTA→App]    │  │  app.bdshy.vn    │  │  congtyxyz.bdshy.vn  │  │ admin.bdshy    │
 └──────┬────────┘  └───────┬──────────┘  └──────────┬───────────┘  └───────┬────────┘
-       │                   │                         │                      │
+       │  (CTA "Xem tin    │                         │                      │
+       │   bán đất ngay")  │                         │                      │
        └───────────────────┴─────────────────────────┴──────────────────────┘
                                            │
                               ┌────────────▼────────────┐
@@ -76,12 +77,13 @@
 
 | Section | Nội dung |
 |---|---|
-| Hero | **"Uy tín – An tâm – Mua nhanh – Bán lẹ"** + mô tả ngắn về Sàn BĐS Hưng Yên + CTA "Liên hệ tư vấn" |
+| Hero | **"Uy tín – An tâm – Mua nhanh – Bán lẹ"** + mô tả ngắn về Sàn BĐS Hưng Yên + CTA "Liên hệ tư vấn" + CTA **"Xem tin bán đất"** → `app.bdshy.vn` |
 | Tính năng | Giới thiệu tính năng nổi bật của nền tảng |
 | Cách hoạt động | 3 bước: Đăng ký → Đăng tin → Nhận khách |
 | Bảng giá | Các gói dịch vụ |
 | Liên hệ | Form liên hệ để Admin tạo tài khoản |
 | Blog | Bài viết thị trường BĐS Hưng Yên (SEO) |
+| Xem Tin BĐS | Nút **"Xem tin bán đất ngay"** → dẫn tới [`app.bdshy.vn`](https://app.bdshy.vn) (trang Web App cho người mua, không cần đăng nhập) |
 
 > **Lưu ý:** Công ty BĐS **không tự đăng ký** — phải liên hệ để Admin tạo tài khoản và cấp domain riêng.
 
@@ -521,7 +523,17 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 [Admin]   Duyệt tin → Tin hiển thị lên sàn app.bdshy.vn
 ```
 
-### Luồng 2 — Người mua tìm kiếm và gửi yêu cầu tư vấn
+### Luồng 2 — Khách xem tin BĐS từ Landing Page
+```
+[Khách]     Truy cập bdshy.vn (Landing Page)
+            → Bấm nút "Xem tin bán đất ngay"
+            → Chuyển tới app.bdshy.vn (Web App)
+            → Xem danh sách / Tìm kiếm / Lọc (không cần đăng nhập)
+            → Xem Chi tiết BĐS
+            → (Nếu muốn tư vấn) Đăng nhập bằng SĐT + OTP → Gửi yêu cầu tư vấn
+```
+
+### Luồng 3 — Người mua tìm kiếm và gửi yêu cầu tư vấn
 ```
 [Người mua] Vào app.bdshy.vn hoặc Mobile App
             → Xem danh sách / Tìm kiếm / Lọc
@@ -538,7 +550,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 [Người mua] Xem lịch sử tư vấn → Theo dõi trạng thái đơn
 ```
 
-### Luồng 3 — Admin nhắc nhở đơn tư vấn bị bỏ quên
+### Luồng 4 — Admin nhắc nhở đơn tư vấn bị bỏ quên
 ```
 [Hệ thống]  Job tự động chạy mỗi giờ
             → Phát hiện đơn "Chờ tư vấn" quá 24h chưa cập nhật
@@ -548,7 +560,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
             → Gửi nhắc nhở thủ công nếu cần
 ```
 
-### Luồng 4 — Người bán cá nhân đăng ký ký gửi
+### Luồng 5 — Người bán cá nhân đăng ký ký gửi
 ```
 [Người bán] Đăng nhập bằng SĐT + OTP
             → Vào màn "Đăng ký bán BĐS"
