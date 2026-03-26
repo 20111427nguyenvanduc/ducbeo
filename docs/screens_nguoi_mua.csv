@@ -1,0 +1,8 @@
+Stt,Nền tảng,Vai trò,Tên màn hình,Mô tả
+1,Web + App,Người mua / Người bán cá nhân,M01 - Trang Chủ,"Hiển thị danh sách tin đăng dạng thẻ; bộ lọc nhanh theo loại hình / tỉnh thành / giá / diện tích; header logo + slogan + thanh tìm kiếm; không cần đăng nhập"
+2,Web + App,Người mua / Người bán cá nhân,M02 - Tìm Kiếm & Lọc Nâng Cao,"Lọc nâng cao: loại hình, tỉnh/quận/phường, khoảng giá, diện tích, pháp lý; xem kết quả dạng Danh sách hoặc Bản đồ; sắp xếp theo mới nhất / giá / diện tích"
+3,Web + App,Người mua / Người bán cá nhân,M03 - Chi Tiết BĐS,"Carousel ảnh fullscreen; thông tin đầy đủ: giá, diện tích, pháp lý, hướng nhà, nội thất, số phòng; bản đồ Google Maps; thông tin công ty đăng; nút GỬI YÊU CẦU TƯ VẤN (sticky bottom); không cần đăng nhập"
+4,Web + App,Người mua / Người bán cá nhân,M04 - Đăng Nhập (SĐT + OTP),"Nhập số điện thoại → nhận OTP qua SMS → nhập mã OTP 6 số xác nhận; nếu SĐT chưa có tài khoản thì tự động tạo mới; gửi lại OTP sau 60 giây"
+5,Web + App,Người mua / Người bán cá nhân,M05 - Form Gửi Yêu Cầu Tư Vấn,"Bottom sheet / popup: điền tên, SĐT (tự điền nếu đã đăng nhập), ghi chú; sau khi gửi hệ thống tạo đơn trạng thái Chờ tư vấn và thông báo realtime cho Công ty BĐS"
+6,Web + App,Người mua / Người bán cá nhân,M06 - Lịch Sử Tư Vấn,"Danh sách các đơn tư vấn đã gửi; mỗi đơn hiển thị: tên BĐS, công ty tư vấn, ngày gửi, trạng thái hiện tại; cần đăng nhập"
+7,Web + App,Người mua / Người bán cá nhân,M07 - Đăng Ký Bán / Ký Gửi BĐS,"Form ký gửi tài sản: loại hình, diện tích, giá mong muốn, địa chỉ, pháp lý, upload ảnh, ghi chú, SĐT liên hệ; sau khi gửi Admin tiếp nhận và liên hệ lại; cần đăng nhập"
