@@ -1,0 +1,12 @@
+Stt,Nền tảng,Vai trò,Tên màn hình,Mô tả
+1,Web,Admin / Super Admin,A01 - Đăng Nhập Admin,Màn hình đăng nhập bằng Username + Password dành cho Admin và Super Admin
+2,Web,Admin / Super Admin,A02 - Dashboard Thống Kê,"Tổng quan toàn hệ thống: số công ty đang hoạt động / tin đang hiển thị / đơn tư vấn hôm nay / đơn chờ xử lý; biểu đồ tin đăng và đơn tư vấn theo ngày/tuần/tháng; danh sách tin chờ duyệt mới nhất và đơn tư vấn quá hạn"
+3,Web,Admin / Super Admin,A03 - Quản Lý Công Ty BĐS,"Danh sách công ty kèm domain, trạng thái, ngày tạo, số tin đăng, số đơn tư vấn; tạo tài khoản mới + cấp domain riêng; sửa / khoá / mở khoá / xoá tài khoản công ty"
+4,Web,Admin / Super Admin,A04 - Chi Tiết Công Ty,Xem đầy đủ thông tin công ty + danh sách tài sản + tin đăng + đơn tư vấn của công ty đó
+5,Web,Admin / Super Admin,A05 - Quản Lý Thành Viên,"Danh sách tài khoản người mua/bán cá nhân: SĐT, ngày đăng ký, số đơn tư vấn, số yêu cầu ký gửi; khoá / mở khoá tài khoản; xem lịch sử đơn tư vấn của từng thành viên"
+6,Web,Admin / Super Admin,A06 - Quản Lý Tin Đăng,"Tabs: Chờ duyệt / Đang hiển thị / Hết hạn / Bị từ chối; Admin duyệt ✅ hoặc từ chối ❌ kèm lý do; xoá tin vi phạm nội dung; thông báo kết quả duyệt đến Công ty BĐS"
+7,Web,Admin / Super Admin,A07 - Quản Lý Đơn Tư Vấn (Toàn hệ thống),"Danh sách toàn bộ đơn tư vấn; lọc theo công ty / trạng thái / thời gian; highlight đơn quá hạn chưa cập nhật; gửi nhắc nhở thủ công; xuất danh sách Excel/CSV; job tự động: đơn Chờ tư vấn quá 24h → nhắc nhở, đơn Đang tư vấn quá 72h → cảnh báo"
+8,Web,Admin / Super Admin,A08 - Thống Kê & Báo Cáo,"Báo cáo theo khoảng thời gian tuỳ chọn: thống kê tin đăng (tổng / mới / hết hạn / từ chối), đơn tư vấn (tổng / hoàn thành / tỷ lệ chuyển đổi), người dùng (mới / hoạt động); xuất báo cáo Excel/PDF"
+9,Web,Admin / Super Admin,A09 - Góp Ý & Phản Hồi,Danh sách góp ý và phản hồi từ người dùng; xem chi tiết; đánh dấu đã xử lý; phản hồi lại người dùng
+10,Web,Admin / Super Admin,A10 - Quản Lý Media,"Tab 1: Ảnh tin đăng toàn hệ thống (xem / tải về / xoá ảnh vi phạm); Tab 2: Banner & Marketing (upload / sắp xếp / bật-tắt banner trên trang chủ Web App và Landing Page)"
+11,Web,Super Admin,A11 - Cài Đặt Hệ Thống,"Quản lý danh mục: loại hình BĐS, tỉnh/thành phố, tình trạng pháp lý; cài đặt thời gian job tự động nhắc nhở; quản lý email template; quản lý tài khoản Admin (tạo / khoá / xoá) — chỉ Super Admin"
