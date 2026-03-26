@@ -1,0 +1,12 @@
+Stt,Nền tảng,Vai trò,Tên màn hình,Mô tả
+1,Web,Công ty BĐS,C01 - Đăng Nhập,Màn hình đăng nhập bằng Username + Password; sai 5 lần bị khoá tài khoản tạm thời
+2,Web,Công ty BĐS,C02 - Đổi Mật Khẩu Lần Đầu,Bắt buộc đổi mật khẩu khi đăng nhập lần đầu với tài khoản do Admin cấp
+3,Web,Công ty BĐS,C03 - Quên Mật Khẩu,Reset mật khẩu qua 3 bước: nhập Username/SĐT → nhận OTP SMS → nhập mật khẩu mới
+4,Web,Công ty BĐS,C04 - Dashboard Tổng Quan,Hiển thị thống kê nhanh: số tài sản / tin đăng / đơn tư vấn mới / đơn đang dở; danh sách đơn mới nhất và tin sắp hết hạn; biểu đồ đơn tư vấn theo tuần/tháng
+5,Web,Công ty BĐS,C05 - Quản Lý Tài Sản,Danh sách tài sản BĐS của công ty; tìm kiếm/lọc theo loại hình và trạng thái; thêm/sửa/xoá tài sản
+6,Web,Công ty BĐS,C06 - Chi Tiết / Tạo / Sửa Tài Sản,"Form nhập đầy đủ thông tin tài sản: loại hình, diện tích, giá, pháp lý, vị trí, hình ảnh, chi tiết nội thất"
+7,Web,Công ty BĐS,C07 - Quản Lý Tin Đăng,"Danh sách tin đăng theo các tab: Tất cả, Đang hiển thị, Chờ duyệt, Hết hạn, Bị từ chối"
+8,Web,Công ty BĐS,C08 - Tạo / Sửa Tin Đăng,Chọn tài sản liên kết + điền tiêu đề + mô tả marketing + ngày hết hạn rồi gửi duyệt
+9,Web,Công ty BĐS,C09 - Quản Lý Đơn Tư Vấn,"Danh sách đơn tư vấn từ khách hàng; lọc theo tin đăng / trạng thái / thời gian; cập nhật trạng thái đơn theo vòng đời: Chờ tư vấn → Đang tư vấn → Hẹn xem đất → Đang chuyển nhượng → Chờ sổ → Hoàn thành"
+10,Web,Công ty BĐS,C10 - Chi Tiết Đơn Tư Vấn,Thông tin khách hàng + timeline trạng thái đơn + ghi chú nội bộ
+11,Web,Công ty BĐS,C11 - Hồ Sơ Công Ty,Xem và cập nhật logo / thông tin liên hệ / domain được cấp; đổi mật khẩu; đăng xuất
