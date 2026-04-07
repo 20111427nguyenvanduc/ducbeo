@@ -10,35 +10,32 @@
 
 ### 1.1 Giới thiệu
 
-**Sàn Bất Động Sản Hưng Yên** là nền tảng trung gian kết nối **Công ty Bất Động Sản** với **Người có nhu cầu mua / bán BĐS** tại Hưng Yên và các khu vực lân cận. Hệ thống cho phép các Công ty BĐS đăng tin rao bán tài sản, quản lý danh sách tài sản và theo dõi toàn bộ quá trình tư vấn khách hàng từ lúc khách để lại thông tin đến khi hoàn thành giao dịch.
+**Sàn Bất Động Sản Hưng Yên** là nền tảng trung gian kết nối **Công ty Bất Động Sản** với **Người có nhu cầu mua / bán BĐS** tại Hưng Yên và các khu vực lân cận.
 
 > 💬 **Slogan:** *Uy tín – An tâm – Mua nhanh – Bán lẹ*
 
 ### 1.2 Mục tiêu
 
-- Cung cấp **công cụ quản lý chuyên nghiệp** cho Công ty BĐS: quản lý tài sản, đăng tin, theo dõi đơn tư vấn.
+- Cung cấp **công cụ quản lý chuyên nghiệp** cho Công ty BĐS.
 - Giúp **Người mua** dễ dàng tìm kiếm BĐS phù hợp và gửi yêu cầu tư vấn.
 - Cho phép **Người bán cá nhân** đăng ký ký gửi tài sản lên sàn.
-- Cung cấp **hệ thống quản trị** vận hành toàn bộ nền tảng, nhắc nhở tư vấn và báo cáo thống kê.
+- Cung cấp **hệ thống quản trị** vận hành toàn bộ nền tảng.
 
 ### 1.3 Điểm khác biệt
 
-- Mỗi Công ty BĐS có **domain riêng** được cấp phát bởi Admin (vd: `congtyabc.bdshy.vn`).
-- Hệ thống tách biệt **Tài sản** và **Tin đăng** — 1 tài sản có thể có nhiều tin đăng, tránh spam, dễ quản lý.
-- **Đơn tư vấn** có vòng đời đầy đủ từ Chờ tư vấn → Hoàn thành, được theo dõi realtime.
-- Admin có **job tự động** nhắc nhở Công ty BĐS khi đơn tư vấn bị bỏ quên.
+- Mỗi Công ty BĐS có **domain riêng** (vd: `congtyabc.bdshy.vn`).
+- Hệ thống tách biệt **Tài sản** và **Tin đăng**.
+- **Đơn tư vấn** có vòng đời đầy đủ, theo dõi realtime.
+- Admin có **job tự động** nhắc nhở Công ty BĐS.
 
 ### 1.4 Sơ đồ tổng thể
 
 ```
 ┌───────────────┐  ┌──────────────────┐  ┌──────────────────────┐  ┌────────────────┐
-│  Landing Page │  │  Web + Mobile    │  │  Company Portal      │  │  Admin System  │
-│  (WordPress)  │──▶  App             │  │  (Công ty BĐS)       │  │  (Quản trị)    │
-│  bdshy.vn     │  │  (Người mua/bán) │  │  congtyabc.bdshy.vn  │  │                │
-│  [CTA→App]    │  │  app.bdshy.vn    │  │  congtyxyz.bdshy.vn  │  │ admin.bdshy    │
+│  Landing Page │──▶  Web + Mobile    │  │  Company Portal      │  │  Admin System  │
+│  bdshy.vn     │  │  App             │  │  congtyabc.bdshy.vn  │  │  admin.bdshy   │
+│  [CTA→App]    │  │  app.bdshy.vn    │  │  congtyxyz.bdshy.vn  │  │                │
 └──────┬────────┘  └───────┬──────────┘  └──────────┬───────────┘  └───────┬────────┘
-       │  (CTA "Xem tin    │                         │                      │
-       │   bán đất ngay")  │                         │                      │
        └───────────────────┴─────────────────────────┴──────────────────────┘
                                            │
                               ┌────────────▼────────────┐
@@ -58,9 +55,9 @@
 
 | # | Người dùng | Mô tả | Đăng nhập | Nền tảng |
 |---|---|---|---|---|
-| 1 | 👤 **Người mua / Người bán cá nhân** | Tìm BĐS, gửi yêu cầu tư vấn, xem lịch sử tư vấn, đăng ký ký gửi tài sản | SĐT + OTP | Web + App |
+| 1 | 👤 **Người mua / Người bán cá nhân** | Tìm BĐS, gửi yêu cầu tư vấn, xem lịch sử, đăng ký ký gửi | SĐT + OTP | Web + App |
 | 2 | 🏢 **Nhân viên Công ty BĐS** | Quản lý tài sản, đăng tin, xử lý đơn tư vấn | Username + Password | Web |
-| 3 | 🔑 **Admin** | Vận hành hệ thống, duyệt tin, quản lý công ty, nhắc nhở tư vấn | Username + Password | Web |
+| 3 | 🔑 **Admin** | Vận hành hệ thống, duyệt tin, quản lý công ty | Username + Password | Web |
 | 4 | 🦸 **Super Admin** | Toàn quyền hệ thống, quản lý Admin, cài đặt | Username + Password | Web |
 
 ---
@@ -73,27 +70,21 @@
 
 **Mục đích:** Giới thiệu nền tảng, thu hút Công ty BĐS liên hệ sử dụng dịch vụ.
 
-**Đối tượng:** Khách truy cập, Công ty BĐS tiềm năng.
-
 | Section | Nội dung |
 |---|---|
-| Hero | **"Uy tín – An tâm – Mua nhanh – Bán lẹ"** + mô tả ngắn về Sàn BĐS Hưng Yên + CTA "Liên hệ tư vấn" + CTA **"Xem tin bán đất"** → `app.bdshy.vn` |
-| Tính năng | Giới thiệu tính năng nổi bật của nền tảng |
+| Hero | **"Uy tín – An tâm – Mua nhanh – Bán lẹ"** + CTA "Liên hệ tư vấn" + CTA **"Xem tin bán đất"** → `app.bdshy.vn` |
+| Tính năng | Giới thiệu tính năng nổi bật |
 | Cách hoạt động | 3 bước: Đăng ký → Đăng tin → Nhận khách |
 | Bảng giá | Các gói dịch vụ |
 | Liên hệ | Form liên hệ để Admin tạo tài khoản |
 | Blog | Bài viết thị trường BĐS Hưng Yên (SEO) |
-| Xem Tin BĐS | Nút **"Xem tin bán đất ngay"** → dẫn tới [`app.bdshy.vn`](https://app.bdshy.vn) (trang Web App cho người mua, không cần đăng nhập) |
+| **Xem Tin BĐS** | Nút **"Xem tin bán đất ngay"** → `app.bdshy.vn` (không cần đăng nhập) |
 
 > **Lưu ý:** Công ty BĐS **không tự đăng ký** — phải liên hệ để Admin tạo tài khoản và cấp domain riêng.
 
 ---
 
 ### 3.2 🏠 Web App + Mobile App (Dành cho Người mua / Người bán cá nhân)
-
-**Mục đích:** Nơi người dùng tìm kiếm BĐS, gửi yêu cầu tư vấn và theo dõi tiến trình.
-
-**Đối tượng:** Người mua, Người bán cá nhân muốn ký gửi tài sản.
 
 **Đăng nhập:** Số điện thoại + OTP (không cần tài khoản để xem danh sách).
 
@@ -104,38 +95,28 @@
 #### 📱 Màn 1 — Trang Chủ (Không cần đăng nhập)
 
 **Hiển thị:**
-- Header: Logo **Sàn BĐS Hưng Yên** + Slogan *"Uy tín – An tâm – Mua nhanh – Bán lẹ"* + Thanh tìm kiếm nhanh + Nút "Đăng nhập"
-- Bộ lọc nhanh: Loại hình (Đất / Nhà riêng / Căn hộ), Tỉnh/Thành, Khoảng giá, Diện tích
+- Header: Logo + Slogan + Thanh tìm kiếm + Nút "Đăng nhập"
+- Bộ lọc nhanh: Loại hình (Đất nền / Nhà riêng / Căn hộ / Biệt thự / Nhà mặt phố / Văn phòng / Mặt bằng KD / Kho-Xưởng / Đất nông nghiệp / Dự án BĐS), Loại giao dịch (Bán / Cho thuê), Tỉnh/Thành, Khoảng giá, Diện tích
 - Danh sách tin đăng dạng thẻ: ảnh đại diện, tiêu đề, giá, diện tích, vị trí, loại hình
 - Phân trang / Infinite scroll
 - Footer
-
-**Người dùng có thể:**
-- Nhập từ khoá → chuyển màn Tìm kiếm
-- Chọn bộ lọc nhanh → cập nhật danh sách ngay
-- Bấm vào thẻ tin → màn Chi tiết BĐS
-- Bấm "Đăng nhập" → màn Đăng nhập
 
 ---
 
 #### 📱 Màn 2 — Tìm Kiếm & Lọc Nâng Cao
 
-**Hiển thị:**
-- Thanh search với từ khoá hiện tại
-- Bộ lọc nâng cao:
-  - Loại hình: Đất / Nhà riêng / Căn hộ
-  - Tỉnh / Quận / Phường (địa chỉ cũ và mới)
-  - Khoảng giá (từ - đến)
-  - Diện tích (từ - đến)
-  - Pháp lý: Sổ đỏ/Sổ hồng / Hợp đồng mua bán / Đang chờ sổ
+**Bộ lọc nâng cao:**
+- Loại hình BĐS (multi-select, 10 loại)
+- Loại giao dịch: Bán / Cho thuê
+- Tỉnh / Quận / Phường
+- Khoảng giá (từ - đến)
+- Diện tích (từ - đến)
+- Pháp lý: Sổ đỏ / Sổ hồng / Hợp đồng / Đang chờ sổ
+- Số phòng ngủ: 1PN / 2PN / 3PN / 4PN+ (cho Nhà, Căn hộ, Biệt thự)
+- Hướng nhà/ban công
+- Nội thất: Đầy đủ / Cơ bản / Không nội thất
 - Kết quả dạng **Danh sách** hoặc **Bản đồ**
 - Sắp xếp: Mới nhất / Giá tăng / Giá giảm / Diện tích
-
-**Người dùng có thể:**
-- Nhập từ khoá + bộ lọc → kết quả cập nhật realtime
-- Chuyển đổi List ↔ Map
-- Bấm vào thẻ → màn Chi tiết
-- Xoá bộ lọc → reset
 
 ---
 
@@ -143,366 +124,203 @@
 
 **Hiển thị:**
 - Carousel ảnh (vuốt / bấm xem fullscreen)
-- Tiêu đề, Giá bán, Giá/m², Diện tích
-- Loại hình, Pháp lý, Mặt tiền (m), Đường vào (m), Hướng nhà, Hướng ban công
-- Số phòng ngủ, Số phòng tắm/WC, Số tầng, Nội thất
-- Tên dự án (nếu là căn hộ chung cư)
+- Tiêu đề, Giá bán/thuê, Giá/m², Diện tích, Loại hình, Pháp lý
 - Địa chỉ + Bản đồ Google Maps
 - Thông tin Công ty đăng: Logo, tên, SĐT
 - Nút **"GỬI YÊU CẦU TƯ VẤN"** (sticky bottom)
 - Nút Chia sẻ
 
-**Người dùng có thể:**
-- Vuốt / bấm ảnh → xem fullscreen
-- Bấm "Xem bản đồ" → mở Google Maps
-- Bấm "Chia sẻ" → chia sẻ link
-- Bấm "GỬI YÊU CẦU TƯ VẤN" → mở Form tư vấn (nếu chưa đăng nhập → yêu cầu đăng nhập trước)
+**Thông tin chi tiết theo từng loại hình BĐS:**
+
+| Loại hình | Trường thông tin đặc trưng |
+|---|---|
+| 🏘️ Đất nền / Đất thổ cư | Loại đất (Thổ cư / Nông nghiệp / Công nghiệp), Quy hoạch, Vị trí lô, Hướng, Mặt tiền (m), Đường vào (m) |
+| 🏠 Nhà riêng / Nhà phố | Số tầng, DT sàn (m²), Số PN, Số WC, Mặt tiền (m), Đường vào (m), Hướng nhà, Nội thất |
+| 🏢 Căn hộ chung cư | Tầng số, Tòa nhà, Số PN, Số WC, Hướng ban công, View, Nội thất, Tên dự án/chung cư |
+| 🏡 Biệt thự / Nhà liền kề | DT đất (m²), DT xây dựng (m²), Số tầng, Số PN, Sân vườn (Có/Không), Hồ bơi (Có/Không), Hướng |
+| 🏬 Nhà mặt phố / Mặt tiền | Số tầng, DT sàn (m²), Mặt tiền (m), Vỉa hè (m), Hướng, Phù hợp KD (Có/Không) |
+| 🏢 Văn phòng | DT sàn (m²), Tầng số, Tòa nhà, Nội thất, ĐH trung tâm (Có/Không), Thang máy (Có/Không) |
+| 🏪 Mặt bằng kinh doanh | DT sàn (m²), Chiều ngang (m), Chiều dài (m), Mặt tiền (m), Tầng số, Vị trí (góc/giữa dãy) |
+| 🏭 Kho / Xưởng | DT kho (m²), Chiều cao kho (m), Tải trọng sàn (tấn/m²), Cửa xe tải (Có/Không), Điện 3 pha (Có/Không) |
+| 🌾 Đất nông nghiệp | Loại đất, DT (m² hoặc ha), Nguồn nước (Có/Không), Hiện trạng |
+| 🏗️ Dự án BĐS | Tên dự án, Chủ đầu tư, Tiến độ, Loại căn, Tầng, Block |
 
 ---
 
 #### 📱 Màn 4 — Đăng Nhập (SĐT + OTP)
 
-**Hiển thị:**
-- Nhập số điện thoại → Bấm "Gửi OTP"
-- Nhập mã OTP (6 số) → Bấm "Xác nhận"
-- Nếu số chưa có tài khoản → tự động tạo tài khoản mới
-
-**Người dùng có thể:**
-- Nhập SĐT → nhận OTP qua SMS
-- Nhập OTP đúng → đăng nhập thành công, về màn trước đó
+- Nhập SĐT → Bấm "Gửi OTP" → Nhập mã OTP (6 số) → Bấm "Xác nhận"
+- Nếu số chưa có tài khoản → tự động tạo mới
 - Bấm "Gửi lại OTP" (sau 60 giây)
 
 ---
 
 #### 📱 Màn 5 — Form Gửi Yêu Cầu Tư Vấn (Bottom Sheet)
 
-**Hiển thị:**
-- Tiêu đề: "Gửi yêu cầu tư vấn"
-- Tên *
-- Số điện thoại * (tự điền nếu đã đăng nhập)
-- Ghi chú / Yêu cầu thêm
-- Nút "Gửi yêu cầu"
-
-**Sau khi gửi:**
-- Hệ thống tạo đơn tư vấn, trạng thái: **"Chờ tư vấn"**
-- Công ty BĐS nhận thông báo realtime
-- Người dùng nhận thông báo "Yêu cầu đã được gửi thành công"
+- Tên *, SĐT * (tự điền), Ghi chú
+- Sau khi gửi → tạo đơn tư vấn trạng thái **"Chờ tư vấn"** + thông báo realtime cho Công ty BĐS
 
 ---
 
 #### 📱 Màn 6 — Lịch Sử Tư Vấn (Cần đăng nhập)
 
-**Hiển thị:**
-- Danh sách các đơn tư vấn đã gửi
-- Mỗi đơn: Tên BĐS, Công ty tư vấn, Ngày gửi, Trạng thái hiện tại
-
 **Trạng thái đơn tư vấn:**
+
 | Trạng thái | Ý nghĩa |
 |---|---|
 | ⏳ Chờ tư vấn | Vừa gửi, chưa có phản hồi |
-| 📞 Đang tư vấn | Công ty đang liên hệ tư vấn |
+| 📞 Đang tư vấn | Công ty đang liên hệ |
 | 🏠 Hẹn xem đất | Đã hẹn lịch đi xem thực tế |
-| 📝 Đang tên chuyển nhượng | Đang làm thủ tục sang tên |
+| 📝 Đang chuyển nhượng | Đang làm thủ tục sang tên |
 | 📋 Chờ sổ | Đang chờ cấp sổ |
 | ✅ Hoàn thành | Giao dịch hoàn tất |
-
-**Người dùng có thể:**
-- Xem chi tiết từng đơn tư vấn
-- Xem BĐS liên quan
 
 ---
 
 #### 📱 Màn 7 — Đăng Ký Bán BĐS / Ký Gửi (Cần đăng nhập)
 
-Dành cho người có tài sản muốn nhờ sàn tìm người mua.
+**Form:**
+- Loại hình: dropdown 10 loại + Loại giao dịch: Bán / Cho thuê
+- Diện tích (m²), Giá mong muốn
+- Địa chỉ đầy đủ (Tỉnh/Quận/Phường + chi tiết)
+- Tình trạng pháp lý
+- Upload ảnh tài sản (tối đa 10 ảnh)
+- Mô tả thêm, SĐT liên hệ *
+- *Sau khi chọn loại hình → hiện thêm các trường đặc trưng tương ứng*
+
+---
+
+#### 📱 Màn 8 — Thông Tin Cá Nhân (Cần đăng nhập)
 
 **Hiển thị:**
-- Form điền thông tin tài sản cần bán:
-  - Loại hình: Đất / Nhà riêng / Căn hộ
-  - Diện tích, Giá mong muốn
-  - Địa chỉ
-  - Tình trạng pháp lý
-  - Upload ảnh tài sản
-  - Ghi chú thêm
-  - SĐT liên hệ *
+- Avatar / Ảnh đại diện (bấm để upload/thay đổi)
+- Họ và tên
+- Số điện thoại (SĐT đăng nhập — chỉ đọc)
+- Email (tùy chọn)
+- Ngày sinh (tùy chọn)
+- Giới tính: Nam / Nữ / Khác (tùy chọn)
+- Địa chỉ thường trú (tùy chọn)
+- Nút "Cập nhật thông tin"
+- Nút "Đăng xuất"
 
-**Sau khi gửi:**
-- Admin nhận yêu cầu ký gửi
-- Admin phân công hoặc liên hệ lại với người bán
+**Người dùng có thể:**
+- Upload/thay đổi ảnh đại diện
+- Chỉnh sửa họ tên, email, ngày sinh, giới tính, địa chỉ
+- Lưu thông tin → hệ thống tự điền vào form tư vấn khi cần
+- Đăng xuất khỏi tài khoản
 
 ---
 
 ### 3.3 🏢 Company Portal (Dành cho Công ty BĐS)
 
-**Mục đích:** Công cụ quản lý toàn diện cho Công ty BĐS — quản lý tài sản, đăng tin và xử lý đơn tư vấn.
+**Đăng nhập:** Username + Password (do Admin cấp). Không cần OTP khi đăng nhập thông thường — OTP chỉ dùng khi **quên mật khẩu**.
 
-**Đối tượng:** Nhân viên / Quản lý Công ty BĐS.
-
-**Đăng nhập:** Username + Password (do Admin cấp).
-
-**Truy cập:** Domain riêng do Admin cấp, ví dụ `congtyabc.bdshy.vn`.
-
-**Công nghệ:** ReactJS + Vite + Tailwind CSS.
+**Truy cập:** `congtyabc.bdshy.vn` | **Công nghệ:** ReactJS + Vite + Tailwind CSS.
 
 ---
 
 #### 🖥️ Màn 1 — Đăng Nhập
 
-**Hiển thị:** Username, Password, Nút "Đăng nhập", Link "Quên mật khẩu"
-
-**Lưu ý:**
-- Lần đầu đăng nhập → bắt buộc **đổi mật khẩu** trước khi vào hệ thống
+- Username, Password, Nút "Đăng nhập", Link "Quên mật khẩu"
+- Lần đầu đăng nhập → bắt buộc **đổi mật khẩu**
 - Đăng nhập sai 5 lần → khoá tài khoản tạm thời
-
----
 
 #### 🖥️ Màn 2 — Đổi Mật Khẩu Lần Đầu
 
-Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
+- Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp
+- Nhập mật khẩu mới + xác nhận → Cập nhật
 
-**Hiển thị:**
-- Mật khẩu mới *
-- Xác nhận mật khẩu mới *
-- Nút "Cập nhật mật khẩu"
+#### 🖥️ Màn 3 — Quên Mật Khẩu (OTP qua SĐT)
 
----
-
-#### 🖥️ Màn 3 — Quên Mật Khẩu
-
-**Hiển thị:**
-- Bước 1: Nhập Username hoặc SĐT đăng ký
-- Bước 2: Nhận mã OTP qua SMS → Nhập OTP xác nhận
-- Bước 3: Nhập mật khẩu mới
-
----
+- Nhập Username hoặc Email → Hệ thống gửi OTP SMS về SĐT đăng ký
+- Nhập OTP → Nhập mật khẩu mới
 
 #### 🖥️ Màn 4 — Dashboard Tổng Quan
 
-**Hiển thị:**
-- Lời chào: "Xin chào, [Tên Công ty]!"
-- Thống kê nhanh:
-  - Số tài sản đang quản lý
-  - Số tin đang hiển thị trên sàn
-  - Số đơn tư vấn mới (chưa xử lý)
-  - Số đơn đang tư vấn dở
-- Danh sách **đơn tư vấn mới nhất** cần xử lý ngay
-- Danh sách **tin đăng sắp hết hạn**
+- Thống kê nhanh: tài sản, tin đăng, đơn tư vấn mới, đơn đang xử lý
+- Danh sách đơn tư vấn mới nhất + tin đăng sắp hết hạn
 - Biểu đồ đơn tư vấn theo tuần/tháng
-
-**Người dùng có thể:**
-- Bấm vào số liệu → chuyển màn tương ứng
-- Bấm vào đơn → xem chi tiết đơn tư vấn
-- Bấm "Tạo tin mới" → màn Quản lý tin đăng
-
----
 
 #### 🖥️ Màn 5 — Quản Lý Tài Sản
 
-**Mục đích:** Quản lý danh sách tài sản BĐS của công ty. Mỗi tin đăng sẽ liên kết với 1 tài sản, tránh đăng trùng lặp, dễ kiểm soát.
-
-**Hiển thị:**
-- Nút "Thêm tài sản mới"
-- Danh sách tài sản: ảnh đại diện, loại hình, địa chỉ, giá, diện tích, số tin đăng đang chạy
-- Tìm kiếm / Lọc theo loại hình, trạng thái
-
-**Thông tin của 1 tài sản:**
+**Thông tin của 1 tài sản (dynamic theo loại hình):**
 
 | Nhóm | Trường thông tin |
 |---|---|
-| **Cơ bản** | Loại hình (Đất / Nhà riêng / Căn hộ), Diện tích (m²), Giá bán, SĐT người bán |
-| **Pháp lý** | Sổ đỏ/Sổ hồng / Hợp đồng mua bán / Đang chờ sổ |
-| **Vị trí** | Địa chỉ cũ, Địa chỉ mới (theo tỉnh thành gộp), Tỉnh/Quận/Phường |
-| **Hình ảnh** | Upload nhiều ảnh, kéo thả sắp xếp, ảnh đầu = ảnh đại diện |
-| **Chi tiết** | Nội thất, Số phòng ngủ, Số phòng tắm/WC, Số tầng, Hướng nhà, Hướng ban công, Đường vào (m), Mặt tiền (m), Tên dự án (nếu là căn hộ) |
-
-**Người dùng có thể:**
-- Thêm tài sản mới
-- Chỉnh sửa thông tin tài sản
-- Xoá tài sản (nếu không có tin đăng đang chạy)
-- Bấm vào tài sản → xem danh sách tin đăng liên kết
-
----
+| **Cơ bản** | Loại hình BĐS (10 loại), Loại giao dịch (Bán/Cho thuê), Giá (VNĐ), Diện tích (m²), SĐT người bán/chủ |
+| **Pháp lý** | Sổ đỏ / Sổ hồng / Hợp đồng mua bán / Đang chờ sổ |
+| **Vị trí** | Tỉnh/Quận/Phường, Địa chỉ chi tiết, Tọa độ GPS (tự động hoặc chọn trên bản đồ) |
+| **Hình ảnh** | Upload tối đa 20 ảnh, kéo thả sắp xếp, ảnh đầu = đại diện, hỗ trợ video |
+| **Đất nền** | *(Hiện khi chọn = Đất nền)* Loại đất, Quy hoạch, Vị trí lô, Hướng, Mặt tiền, Đường vào |
+| **Nhà riêng/Nhà phố** | *(Hiện khi chọn = Nhà riêng)* Số tầng, DT sàn, Số PN, Số WC, Mặt tiền, Đường vào, Hướng, Nội thất |
+| **Căn hộ** | *(Hiện khi chọn = Căn hộ)* Tên dự án/CCC, Tòa, Tầng, Số PN, Số WC, Hướng ban công, View, Nội thất |
+| **Biệt thự/Liền kề** | *(Hiện khi chọn = Biệt thự)* DT đất, DT XD, Số tầng, Số PN, Sân vườn, Hồ bơi, Hướng |
+| **Nhà mặt phố** | *(Hiện khi chọn = Mặt phố)* Số tầng, DT sàn, Mặt tiền, Vỉa hè, Hướng, Phù hợp KD |
+| **Thương mại (VP/Mặt bằng/Kho)** | *(Hiện khi chọn loại tương ứng)* Các trường đặc trưng theo loại |
+| **Đất nông nghiệp** | *(Hiện khi chọn = Đất NN)* Loại đất, DT (m²/ha), Nguồn nước, Hiện trạng |
 
 #### 🖥️ Màn 6 — Quản Lý Tin Đăng
 
-**Mục đích:** Quản lý các tin rao bán được đăng lên sàn. Mỗi tin liên kết với 1 tài sản.
-
-**Hiển thị:**
-- Nút "Tạo tin mới"
-- Tabs: **Tất cả** | **Đang hiển thị** | **Chờ duyệt** | **Hết hạn** | **Bị từ chối**
-- Mỗi tin: ảnh thu nhỏ, tiêu đề, tài sản liên kết, ngày hết hạn, trạng thái (badge màu), số lượt xem, số đơn tư vấn
-
-**Thông tin của 1 tin đăng:**
-- Tiêu đề tin đăng
-- Mô tả (nội dung marketing)
-- Tài sản liên kết (chọn từ danh sách tài sản đã có)
-- Ngày hết hạn tin
-- Trạng thái: Chờ duyệt / Đang hiển thị / Hết hạn / Bị từ chối
-
-**Người dùng có thể:**
-- Tạo tin mới → chọn tài sản → điền tiêu đề, mô tả, ngày hết hạn → gửi duyệt
-- Chỉnh sửa tin → gửi lại duyệt
-- Gia hạn tin đăng sắp hết hạn
-- Xoá tin
-- Xem số liệu: lượt xem, số đơn tư vấn của từng tin
-
----
+- Tabs: Tất cả | Đang hiển thị | Chờ duyệt | Hết hạn | Bị từ chối
+- Tạo tin → chọn tài sản → điền tiêu đề, mô tả, ngày hết hạn → gửi duyệt
+- Gia hạn, Chỉnh sửa, Xoá tin
 
 #### 🖥️ Màn 7 — Quản Lý Đơn Tư Vấn
 
-**Mục đích:** Xem và cập nhật trạng thái tất cả đơn tư vấn mà khách hàng để lại cho các tin đăng của công ty.
-
-**Hiển thị:**
-- Bộ lọc: Theo tin đăng / Theo trạng thái / Theo thời gian
-- Mỗi đơn tư vấn hiển thị:
-  - Tên khách hàng, SĐT
-  - Tin đăng / Tài sản quan tâm
-  - Ghi chú của khách
-  - Thời gian gửi
-  - Trạng thái hiện tại (badge màu theo trạng thái)
-
-**Vòng đời đơn tư vấn:**
-```
-⏳ Chờ tư vấn → 📞 Đang tư vấn → 🏠 Hẹn xem đất → 📝 Đang tên chuyển nhượng → 📋 Chờ sổ → ✅ Hoàn thành
-```
-
-**Người dùng có thể:**
-- Bấm SĐT → gọi điện trực tiếp (trên mobile)
-- Cập nhật trạng thái đơn → chọn trạng thái mới từ dropdown
-- Thêm ghi chú nội bộ vào đơn
-- Lọc đơn theo trạng thái / tin đăng
-
----
+**Vòng đời:** ⏳ Chờ tư vấn → 📞 Đang tư vấn → 🏠 Hẹn xem đất → 📝 Đang chuyển nhượng → 📋 Chờ sổ → ✅ Hoàn thành
 
 #### 🖥️ Màn 8 — Hồ Sơ Công Ty
 
-**Hiển thị:** Logo, Tên công ty, SĐT, Địa chỉ, Domain được cấp
-
-**Người dùng có thể:**
-- Cập nhật logo, thông tin liên hệ
-- Đổi mật khẩu
-- Đăng xuất
+- Logo, Tên công ty, SĐT, Địa chỉ, Domain được cấp
+- Cập nhật thông tin, Đổi mật khẩu, Đăng xuất
 
 ---
 
 ### 3.4 ⚙️ Admin System (Dành cho Quản trị viên)
 
-**Mục đích:** Vận hành toàn bộ nền tảng — quản lý công ty, duyệt tin, theo dõi đơn tư vấn và báo cáo.
-
-**Đối tượng:** Admin, Super Admin.
-
 **Công nghệ:** ReactJS + Vite + Ant Design.
-
----
 
 #### 🖥️ Màn 1 — Dashboard Thống Kê
 
-**Hiển thị:**
-- Tổng số: Công ty đang hoạt động / Tin đang hiển thị / Đơn tư vấn hôm nay / Đơn chờ xử lý
-- Biểu đồ: Tin đăng mới, Đơn tư vấn theo ngày/tuần/tháng
-- Danh sách tin đăng chờ duyệt mới nhất
-- Danh sách đơn tư vấn quá hạn chưa được cập nhật
-
----
+- Tổng số: Công ty hoạt động / Tin đang hiển thị / Đơn hôm nay / Đơn chờ xử lý
+- Biểu đồ theo ngày/tuần/tháng
 
 #### 🖥️ Màn 2 — Quản Lý Công Ty BĐS
 
-**Hiển thị:** Danh sách công ty, domain được cấp, trạng thái, ngày tạo, số tin đăng, số đơn tư vấn
+- Tạo tài khoản + cấp domain riêng (vd: `congtyabc.bdshy.vn`)
+- Chỉnh sửa, Khoá/Mở khoá, Xoá
 
-**Admin có thể:**
-- **Tạo tài khoản mới** cho Công ty BĐS: nhập thông tin công ty, cấp username/password tạm thời, cấp domain riêng (vd: `congtyabc.bdshy.vn`)
-- Chỉnh sửa thông tin công ty
-- Khoá / Mở khoá tài khoản
-- Xoá công ty
-- Xem chi tiết: thông tin + danh sách tài sản + tin đăng + đơn tư vấn
+#### 🖥️ Màn 3 — Quản Lý Thành Viên
 
----
-
-#### 🖥️ Màn 3 — Quản Lý Thành Viên (Người mua / Người bán cá nhân)
-
-**Hiển thị:** Danh sách tài khoản người dùng, SĐT, ngày đăng ký, số đơn tư vấn, số yêu cầu ký gửi
-
-**Admin có thể:**
-- Xem chi tiết tài khoản
-- Khoá / Mở khoá tài khoản
-- Xem lịch sử đơn tư vấn của thành viên
-
----
+- Danh sách người dùng, Khoá/Mở khoá, Xem lịch sử
 
 #### 🖥️ Màn 4 — Quản Lý Tin Đăng
 
-**Hiển thị:**
-- Tabs: **Chờ duyệt** | **Đang hiển thị** | **Hết hạn** | **Bị từ chối**
-- Xem đầy đủ nội dung tin đăng
-
-**Admin có thể:**
-- Duyệt ✅ → tin hiển thị lên sàn → thông báo cho công ty
-- Từ chối ❌ → nhập lý do → gửi thông báo cho công ty
-- Xoá tin vi phạm nội dung
-
----
+- Duyệt ✅ / Từ chối ❌ (nhập lý do) / Xoá
 
 #### 🖥️ Màn 5 — Quản Lý Đơn Tư Vấn (Toàn hệ thống)
 
-**Mục đích:** Theo dõi toàn bộ đơn tư vấn, đảm bảo không có đơn nào bị bỏ sót.
-
-**Hiển thị:**
-- Danh sách tất cả đơn tư vấn, lọc theo công ty / trạng thái / thời gian
-- Highlight các đơn **quá hạn chưa cập nhật** (vd: Chờ tư vấn quá 24h)
-
-**Admin có thể:**
-- Xem chi tiết từng đơn
-- Xuất danh sách đơn (Excel/CSV)
-- **Gửi nhắc nhở** thủ công đến Công ty BĐS cho đơn bị bỏ quên
-
-**Job tự động (background job):**
-- Đơn "Chờ tư vấn" quá 24h → tự động gửi thông báo nhắc nhở Công ty BĐS
-- Đơn "Đang tư vấn" quá 72h không cập nhật → gửi cảnh báo
-
----
+- Highlight đơn quá hạn chưa cập nhật (Chờ tư vấn quá 24h)
+- Job tự động: đơn "Chờ tư vấn" quá 24h → gửi nhắc nhở; đơn "Đang tư vấn" quá 72h → gửi cảnh báo
 
 #### 🖥️ Màn 6 — Thống Kê & Báo Cáo
 
-**Hiển thị:**
-- Báo cáo theo khoảng thời gian tùy chọn
-- Thống kê tin đăng: tổng tin, tin mới, tin hết hạn, tin bị từ chối
-- Thống kê đơn tư vấn: tổng đơn, đơn hoàn thành, tỷ lệ chuyển đổi theo công ty
-- Thống kê người dùng: người dùng mới, người dùng hoạt động
+- Xuất Excel/PDF, lọc theo thời gian/công ty
 
-**Admin có thể:**
-- Lọc báo cáo theo thời gian / công ty
-- Xuất báo cáo Excel/PDF
+#### 🖥️ Màn 7 — Góp Ý & Phản Hồi
 
----
-
-#### 🖥️ Màn 7 — Góp Ý, Đánh Giá, Phản Hồi
-
-**Hiển thị:** Danh sách góp ý / phản hồi từ người dùng (người mua / người bán)
-
-**Admin có thể:**
-- Xem chi tiết từng phản hồi
-- Đánh dấu đã xử lý
-- Phản hồi lại người dùng
-
----
+- Xem, đánh dấu đã xử lý, phản hồi người dùng
 
 #### 🖥️ Màn 8 — Quản Lý Media
 
-**Hiển thị:**
-- Tab 1 **Ảnh tin đăng:** Toàn bộ ảnh của các tin đăng trong hệ thống, lọc theo công ty / tin đăng
-- Tab 2 **Banner & Marketing:** Ảnh/banner hiển thị trên trang chủ Web App và Landing Page
-
-**Admin có thể:**
-- Xem, tải về, xoá ảnh tin đăng vi phạm
-- Upload, sắp xếp, bật/tắt banner marketing
-- Cài đặt thứ tự hiển thị banner
-
----
+- Tab 1: Ảnh tin đăng (xem, tải, xoá vi phạm)
+- Tab 2: Banner & Marketing (upload, sắp xếp, bật/tắt)
 
 #### 🖥️ Màn 9 — Cài Đặt Hệ Thống (Super Admin)
 
-**Admin có thể:**
-- Quản lý danh mục: Loại hình BĐS, Tỉnh/Thành phố, Tình trạng pháp lý
+- Quản lý **Loại hình BĐS**: Đất nền, Nhà riêng, Căn hộ, Biệt thự/Liền kề, Nhà mặt phố, Văn phòng, Mặt bằng KD, Kho/Xưởng, Đất nông nghiệp, Dự án BĐS (thêm/sửa/ẩn)
+- Quản lý **Tỉnh/Thành phố** và đơn vị hành chính
+- Quản lý **Tình trạng pháp lý**
 - Cài đặt thời gian job tự động nhắc nhở
 - Quản lý email template
 - Quản lý tài khoản Admin (tạo, khoá, xoá) — chỉ Super Admin
@@ -515,59 +333,37 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 ```
 [Công ty] Liên hệ qua Landing Page
 [Admin]   Tạo tài khoản, cấp domain riêng (congtyabc.bdshy.vn)
-          Gửi thông tin đăng nhập cho Công ty
-[Công ty] Truy cập congtyabc.bdshy.vn → Đăng nhập
-          → Đổi mật khẩu lần đầu
-          → Thêm tài sản vào hệ thống
-          → Tạo tin đăng → Chọn tài sản → Điền tiêu đề, mô tả → Gửi duyệt
+[Công ty] Đăng nhập → Đổi mật khẩu lần đầu
+          → Thêm tài sản → Tạo tin đăng → Gửi duyệt
 [Admin]   Duyệt tin → Tin hiển thị lên sàn app.bdshy.vn
 ```
 
-### Luồng 2 — Khách xem tin BĐS từ Landing Page
+### Luồng 2 — Khách từ Landing Page xem tin và gửi tư vấn
 ```
-[Khách]     Truy cập bdshy.vn (Landing Page)
-            → Bấm nút "Xem tin bán đất ngay"
-            → Chuyển tới app.bdshy.vn (Web App)
-            → Xem danh sách / Tìm kiếm / Lọc (không cần đăng nhập)
-            → Xem Chi tiết BĐS
-            → (Nếu muốn tư vấn) Đăng nhập bằng SĐT + OTP → Gửi yêu cầu tư vấn
-```
-
-### Luồng 3 — Người mua tìm kiếm và gửi yêu cầu tư vấn
-```
-[Người mua] Vào app.bdshy.vn hoặc Mobile App
-            → Xem danh sách / Tìm kiếm / Lọc
-            → Xem Chi tiết BĐS
-            → Bấm "GỬI YÊU CẦU TƯ VẤN"
-            → Đăng nhập bằng SĐT + OTP (nếu chưa đăng nhập)
-            → Điền tên, ghi chú → Gửi
-[Hệ thống]  Tạo đơn tư vấn (trạng thái: Chờ tư vấn)
-            → Thông báo realtime đến Công ty BĐS
-[Công ty]   Nhận thông báo → Vào màn Đơn tư vấn
-            → Gọi điện cho khách → Cập nhật trạng thái "Đang tư vấn"
-            → Hẹn xem đất → Cập nhật "Hẹn xem đất"
-            → ... → Cập nhật "Hoàn thành"
-[Người mua] Xem lịch sử tư vấn → Theo dõi trạng thái đơn
+[Khách]  Vào bdshy.vn (Landing Page)
+         → Bấm "Xem tin bán đất ngay" → Chuyển tới app.bdshy.vn
+         → Xem danh sách / Tìm kiếm / Lọc (không cần đăng nhập)
+         → Xem Chi tiết BĐS
+         → Bấm "GỬI YÊU CẦU TƯ VẤN"
+         → Đăng nhập bằng SĐT + OTP (nếu chưa đăng nhập)
+         → Điền tên, ghi chú → Gửi
+[Hệ thống] Tạo đơn tư vấn → Thông báo realtime đến Công ty BĐS
+[Công ty]  Gọi điện → Cập nhật trạng thái → ... → Hoàn thành
+[Khách]  Theo dõi trạng thái trong Lịch sử tư vấn
 ```
 
-### Luồng 4 — Admin nhắc nhở đơn tư vấn bị bỏ quên
+### Luồng 3 — Admin nhắc nhở đơn tư vấn bị bỏ quên
 ```
-[Hệ thống]  Job tự động chạy mỗi giờ
-            → Phát hiện đơn "Chờ tư vấn" quá 24h chưa cập nhật
-            → Tự động gửi thông báo nhắc nhở đến Công ty BĐS
-[Admin]     Vào màn Đơn tư vấn
-            → Xem danh sách đơn quá hạn
-            → Gửi nhắc nhở thủ công nếu cần
+[Hệ thống] Job tự động chạy mỗi giờ
+           → Phát hiện đơn "Chờ tư vấn" quá 24h → Gửi nhắc nhở
+[Admin]    Xem danh sách đơn quá hạn → Gửi nhắc nhở thủ công
 ```
 
-### Luồng 5 — Người bán cá nhân đăng ký ký gửi
+### Luồng 4 — Người bán cá nhân đăng ký ký gửi
 ```
-[Người bán] Đăng nhập bằng SĐT + OTP
-            → Vào màn "Đăng ký bán BĐS"
-            → Điền thông tin tài sản + ảnh + SĐT liên hệ → Gửi
-[Admin]     Nhận yêu cầu ký gửi
-            → Liên hệ người bán để xác nhận thông tin
-            → Phân công hoặc tự xử lý
+[Người bán] Đăng nhập SĐT + OTP → Vào màn "Đăng ký bán BĐS"
+            → Điền thông tin + ảnh → Gửi
+[Admin]     Nhận yêu cầu → Liên hệ xác nhận → Phân công xử lý
 ```
 
 ---
@@ -580,7 +376,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 |---|---|---|
 | 1 | Xem danh sách BĐS trên trang chủ | ❌ |
 | 2 | Tìm kiếm theo từ khoá | ❌ |
-| 3 | Lọc theo loại hình, tỉnh/thành, giá, diện tích, pháp lý | ❌ |
+| 3 | Lọc theo loại hình BĐS đầy đủ (Đất nền, Nhà riêng, Căn hộ, Biệt thự, Mặt phố, Thương mại...) | ❌ |
 | 4 | Chuyển đổi xem dạng Danh sách / Bản đồ | ❌ |
 | 5 | Xem chi tiết BĐS (ảnh, thông tin đầy đủ, bản đồ) | ❌ |
 | 6 | Chia sẻ link tin đăng | ❌ |
@@ -588,6 +384,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 | 8 | Gửi yêu cầu tư vấn | ✅ |
 | 9 | Xem lịch sử tư vấn và trạng thái đơn | ✅ |
 | 10 | Đăng ký bán BĐS / Ký gửi tài sản | ✅ |
+| 11 | Xem & cập nhật thông tin cá nhân | ✅ |
 
 ### 🏢 Công ty BĐS (Nhân viên)
 
@@ -595,7 +392,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 |---|---|
 | 1 | Đăng nhập bằng Username + Password |
 | 2 | Đổi mật khẩu lần đầu (bắt buộc) |
-| 3 | Quên mật khẩu / Đặt lại mật khẩu |
+| 3 | Quên mật khẩu / Đặt lại qua OTP SMS |
 | 4 | Xem Dashboard tổng quan |
 | 5 | Thêm / Sửa / Xoá tài sản |
 | 6 | Quản lý ảnh tài sản |
@@ -614,14 +411,14 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 |---|---|
 | 1 | Tạo tài khoản Công ty BĐS + cấp domain riêng |
 | 2 | Sửa / Khoá / Xoá tài khoản Công ty BĐS |
-| 3 | Quản lý tài khoản thành viên (người mua/bán) |
+| 3 | Quản lý tài khoản thành viên |
 | 4 | Duyệt / Từ chối / Xoá tin đăng |
 | 5 | Xem toàn bộ đơn tư vấn hệ thống |
 | 6 | Gửi nhắc nhở thủ công cho đơn bị bỏ quên |
 | 7 | Xem thống kê & báo cáo toàn hệ thống |
 | 8 | Xuất báo cáo Excel/PDF |
 | 9 | Quản lý góp ý / phản hồi người dùng |
-| 10 | Quản lý media (ảnh tin đăng + banner marketing) |
+| 10 | Quản lý media (ảnh tin đăng + banner) |
 | 11 | Quản lý danh mục hệ thống |
 | 12 | Quản lý email template |
 
@@ -632,7 +429,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 | 1 | Tất cả quyền của Admin |
 | 2 | Tạo / Khoá / Xoá tài khoản Admin |
 | 3 | Cài đặt thời gian job tự động nhắc nhở |
-| 4 | Toàn quyền cài đặt hệ thống |
+| 4 | Toàn quyền cài đ���t hệ thống |
 
 ---
 
@@ -642,13 +439,14 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 
 | # | Tên màn | Mô tả ngắn |
 |---|---|---|
-| M01 | Trang Chủ | Danh sách tin đăng + bộ lọc nhanh + logo + slogan |
-| M02 | Tìm Kiếm & Lọc | Lọc nâng cao + xem List/Map |
-| M03 | Chi Tiết BĐS | Thông tin đầy đủ + nút Gửi yêu cầu |
+| M01 | Trang Chủ | Danh sách tin đăng + bộ lọc nhanh đầy đủ |
+| M02 | Tìm Kiếm & Lọc | Lọc nâng cao 10 loại hình + xem List/Map |
+| M03 | Chi Tiết BĐS | Thông tin đầy đủ theo loại hình + nút Gửi yêu cầu |
 | M04 | Đăng Nhập (SĐT + OTP) | Nhập SĐT → nhận OTP → xác nhận |
 | M05 | Form Gửi Yêu Cầu Tư Vấn | Bottom sheet / popup |
 | M06 | Lịch Sử Tư Vấn | Danh sách đơn + trạng thái |
-| M07 | Đăng Ký Bán / Ký Gửi BĐS | Form điền thông tin tài sản muốn bán |
+| M07 | Đăng Ký Bán / Ký Gửi BĐS | Form điền thông tin + dropdown 10 loại hình |
+| M08 | Thông Tin Cá Nhân | Xem & cập nhật hồ sơ, avatar, đăng xuất |
 
 ### 🏢 Company Portal (Công ty BĐS)
 
@@ -656,10 +454,10 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 |---|---|---|
 | C01 | Đăng Nhập | Username + Password |
 | C02 | Đổi Mật Khẩu Lần Đầu | Bắt buộc khi đăng nhập lần đầu |
-| C03 | Quên Mật Khẩu | Reset qua SMS OTP |
+| C03 | Quên Mật Khẩu (OTP) | Nhập SĐT → OTP → mật khẩu mới |
 | C04 | Dashboard Tổng Quan | Thống kê + đơn mới + tin hết hạn |
 | C05 | Quản Lý Tài Sản | Danh sách + thêm/sửa/xoá tài sản |
-| C06 | Chi Tiết / Tạo / Sửa Tài Sản | Form nhập đầy đủ thông tin tài sản |
+| C06 | Chi Tiết / Tạo / Sửa Tài Sản | Form nhập đầy đủ theo loại hình (dynamic fields) |
 | C07 | Quản Lý Tin Đăng | Danh sách tin theo trạng thái |
 | C08 | Tạo / Sửa Tin Đăng | Chọn tài sản + tiêu đề, mô tả + hạn |
 | C09 | Quản Lý Đơn Tư Vấn | Danh sách đơn + cập nhật trạng thái |
@@ -673,14 +471,14 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 | A01 | Đăng Nhập Admin | Username + Password |
 | A02 | Dashboard Thống Kê | Tổng quan toàn hệ thống |
 | A03 | Quản Lý Công Ty BĐS | List + tạo + sửa + khoá + cấp domain |
-| A04 | Chi Tiết Công Ty | Thông tin + tài sản + tin + đơn của công ty |
+| A04 | Chi Tiết Công Ty | Thông tin + tài sản + tin + đơn |
 | A05 | Quản Lý Thành Viên | List người dùng + khoá/mở |
 | A06 | Quản Lý Tin Đăng | Duyệt / Từ chối / Xoá |
-| A07 | Quản Lý Đơn Tư Vấn | Toàn bộ đơn + đơn quá hạn + nhắc nhở |
+| A07 | Quản Lý Đơn Tư Vấn | Toàn bộ đơn + quá hạn + nhắc nhở |
 | A08 | Thống Kê & Báo Cáo | Biểu đồ + xuất Excel/PDF |
 | A09 | Góp Ý & Phản Hồi | Danh sách + xử lý |
 | A10 | Quản Lý Media | Ảnh tin đăng + banner marketing |
-| A11 | Cài Đặt Hệ Thống | Danh mục + email template + job config |
+| A11 | Cài Đặt Hệ Thống | Danh mục 10 loại hình + email template + job config |
 
 ---
 
@@ -717,8 +515,9 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 | Backend API | api.bdshy.vn |
 
 ### Cấu trúc thư mục (Monorepo)
+
 ```
-bds-nen-platform/
+bds-hy-platform/
 ├── web-app/           # React - Người mua/bán
 ├── mobile-app/        # React Native - Người mua/bán
 ├── company-portal/    # React - Công ty BĐS
@@ -732,14 +531,50 @@ bds-nen-platform/
 ## 8. LỘ TRÌNH PHÁT TRIỂN
 
 ### Phase 1 — Nền tảng cốt lõi (Hiện tại)
-- ✅ Web App + Mobile App người mua/bán
+- ✅ Web App + Mobile App người mua/bán (8 màn hình)
 - ✅ Company Portal cho Công ty BĐS
 - ✅ Admin System vận hành
+- ✅ Landing Page WordPress với CTA dẫn tới app.bdshy.vn
 
-### Phase 2 — Mở rộng (2-3 tháng tới)
-- 🔜 Nhận ký gửi từ chủ đất cá nhân
-- 🔜 Module đội sales nội bộ tư vấn trực tiếp
-- 🔜 Báo cáo nâng cao theo hiệu quả sales
+### Phase 2 — Mở rộng (3-6 tháng tới)
+
+#### 🏗️ Nhóm 1 — Mở rộng loại hình BĐS
+- ✅ Đã có (Phase 1): Đất nền, Nhà riêng, Căn hộ chung cư
+- 🔜 **Biệt thự / Nhà liền kề**: Thêm trường thông tin đặc trưng (DT đất, DT xây dựng, sân vườn, hồ bơi). Cập nhật bộ lọc và màn chi tiết.
+- 🔜 **Nhà mặt phố / Mặt tiền**: Thêm trường mặt tiền, vỉa hè, phù hợp kinh doanh. Hiển thị badge "Mặt phố" trên thẻ tin.
+- 🔜 **BĐS thương mại**: Tách 3 nhóm — Văn phòng, Mặt bằng KD, Kho/Xưởng — mỗi nhóm có bộ trường và bộ lọc riêng.
+- 🔜 **Đất nông nghiệp / Trang trại**: Trường loại đất, ngu��n nước, hiện trạng cây trồng, diện tích tính theo ha.
+- 🔜 **Dự án BĐS**: Admin/Công ty tạo dự án tổng thể → đăng tin theo từng căn/lô. Người mua xem sơ đồ mặt bằng, chọn căn theo block/tầng.
+
+#### 👥 Nhóm 2 — Nâng cấp trải nghiệm người dùng
+- 🔜 **Yêu thích tin đăng**: Bấm ❤️ lưu tin, xem lại trong tab "Đã lưu" ở Thông tin cá nhân.
+- 🔜 **So sánh BĐS**: Chọn 2–3 tin đăng → so sánh thông số cạnh nhau (giá/m², diện tích, số phòng, pháp lý, vị trí).
+- 🔜 **Thông báo tin mới phù hợp**: Người dùng lưu bộ lọc → nhận push notification / email khi có tin mới khớp.
+- 🔜 **Đánh giá Công ty BĐS**: Sau khi hoàn thành giao dịch → đánh giá ⭐ (1–5 sao) + nhận xét. Điểm hiển thị trên trang công ty.
+- 🔜 **Chia sẻ mạng xã hội**: Chia sẻ tin đăng lên Facebook, Zalo với preview ảnh + giá + địa chỉ đẹp (Open Graph).
+
+#### 🏢 Nhóm 3 — Nâng cấp Company Portal
+- 🔜 **Quản lý nhân viên sale**: Tạo tài khoản cho từng nhân viên (Admin công ty / Nhân viên). Mỗi người đăng nhập tài khoản riêng.
+- 🔜 **Phân công đơn tư vấn**: Khi có đơn mới, quản lý assign cho nhân viên cụ thể. Nhân viên nhận thông báo và xử lý đơn được giao.
+- 🔜 **Báo cáo hiệu quả nhân viên**: Số đơn nhận, số đơn hoàn thành, tỷ lệ chuyển đổi, thời gian xử lý TB, doanh số ước tính/tháng.
+- 🔜 **CRM nội bộ**: Lưu lịch sử tương tác với từng khách — ghi log cuộc gọi, nhắn tin, lịch hẹn, ghi chú. Tất cả nhân viên công ty cùng xem.
+- 🔜 **Lịch hẹn xem đất**: Giao diện calendar quản lý buổi hẹn. Nhắc nhở tự động 1 giờ trước hẹn.
+
+#### 📊 Nhóm 4 — Nâng cấp Admin & Báo cáo
+- 🔜 **Báo cáo theo loại hình BĐS**: Thống kê tin đăng, đơn tư vấn, tỷ lệ chuyển đổi phân theo từng loại hình và khu vực địa lý.
+- 🔜 **Heatmap thị trường**: Bản đồ nhiệt hiển thị mật độ BĐS rao bán theo địa bàn — nhận ra khu vực nóng.
+- 🔜 **Quy trình ký gửi đầy đủ**: Tiếp nhận → xác minh → chụp ảnh → phân công → đăng tin → theo dõi kết quả bán.
+- 🔜 **Tích hợp Google Analytics**: Theo dõi hành vi: trang xem nhiều nhất, bộ lọc dùng nhiều nhất, tỷ lệ thoát, nguồn traffic.
+- 🔜 **Thông báo đa kênh**: Bổ sung Email notification + Push notification (Firebase FCM) ngoài SMS và Socket.io hiện có.
+
+#### 💳 Nhóm 5 — Thanh toán & Gói dịch vụ
+- 🔜 **Gói dịch vụ cho Công ty BĐS**:
+  - **Cơ bản (Miễn phí)**: Tối đa 10 tin/tháng, không tin nổi bật, báo cáo cơ bản
+  - **Chuyên nghiệp**: Không giới hạn tin, 5 tin nổi bật/tháng, báo cáo đầy đủ, hỗ trợ email
+  - **Doanh nghiệp**: Không giới hạn, tin nổi bật ưu tiên, CRM nội bộ, báo cáo nâng cao, hỗ trợ Zalo/hotline riêng
+- 🔜 **Tin đăng nổi bật**: Trả thêm phí → tin hiển thị đầu danh sách + badge "Nổi bật 🔥".
+- 🔜 **Tích hợp thanh toán**: VNPay, MoMo, chuyển khoản ngân hàng — thanh toán gói dịch vụ và tin nổi bật.
+- 🔜 **Quản lý hóa đơn**: Admin xem danh sách thanh toán, trạng thái, xuất hóa đơn VAT điện tử.
 
 ---
 
