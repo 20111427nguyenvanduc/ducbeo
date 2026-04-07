@@ -1,8 +1,8 @@
 # 🏡 SÀN BẤT ĐỘNG SẢN HƯNG YÊN
 ## *"Uy tín – An tâm – Mua nhanh – Bán lẹ"*
 
-> **Phiên bản:** 2.0.0
-> **Cập nhật:** 03/2026
+> **Phiên bản:** 3.0.0
+> **Cập nhật:** 04/2026
 
 ---
 
@@ -579,4 +579,3 @@ bds-hy-platform/
 ---
 
 *© 2026 Sàn Bất Động Sản Hưng Yên — "Uy tín – An tâm – Mua nhanh – Bán lẹ"*
-*Tài liệu được quản lý tại: https://github.com/20111427nguyenvanduc/ducbeo*
