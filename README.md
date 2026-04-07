@@ -10,15 +10,15 @@
 
 ### 1.1 Giới thiệu
 
-**Sàn Bất Động Sản Hưng Yên** là nền tảng trung gian kết nối **Công ty Bất Động Sản** với **Người có nhu cầu mua / bán BĐS** tại Hưng Yên và các khu vực lân cận. Hệ thống cho phép các Công ty BĐS đăng tin rao bán tài sản, quản lý danh sách tài sản và theo dõi toàn bộ quá trình tư vấn khách hàng từ lúc khách để lại thông tin đến khi hoàn thành giao dịch.
+**Sàn Bất Động Sản Hưng Yên** là nền tảng trung gian kết nối **Công ty Bất Động Sản** với **Người có nhu cầu mua / bán BĐS** tại Hưng Yên và các khu vực lân cận. Hệ thống cho phép các Công ty BĐS đăng tin rao bán **đa dạng loại hình BĐS** (đất nền, nhà riêng, căn hộ chung cư, biệt thự, nhà mặt phố, bất động sản thương mại...), quản lý danh sách tài sản và theo dõi toàn bộ quá trình tư vấn khách hàng từ lúc khách để lại thông tin đến khi hoàn thành giao dịch.
 
 > 💬 **Slogan:** *Uy tín – An tâm – Mua nhanh – Bán lẹ*
 
 ### 1.2 Mục tiêu
 
-- Cung cấp **công cụ quản lý chuyên nghiệp** cho Công ty BĐS: quản lý tài sản, đăng tin, theo dõi đơn tư vấn.
-- Giúp **Người mua** dễ dàng tìm kiếm BĐS phù hợp và gửi yêu cầu tư vấn.
-- Cho phép **Người bán cá nhân** đăng ký ký gửi tài sản lên sàn.
+- Cung cấp **công cụ quản lý chuyên nghiệp** cho Công ty BĐS: quản lý đa dạng loại hình BĐS, đăng tin, theo dõi đơn tư vấn.
+- Giúp **Người mua** dễ dàng tìm kiếm BĐS phù hợp theo nhiều loại hình (đất nền, nhà riêng, căn hộ, biệt thự, nhà mặt phố, thương mại...) và gửi yêu cầu tư vấn.
+- Cho phép **Người bán cá nhân** đăng ký ký gửi tài sản lên sàn với đầy đủ loại hình BĐS.
 - Cung cấp **hệ thống quản trị** vận hành toàn bộ nền tảng, nhắc nhở tư vấn và báo cáo thống kê.
 
 ### 1.3 Điểm khác biệt
@@ -105,7 +105,7 @@
 
 **Hiển thị:**
 - Header: Logo **Sàn BĐS Hưng Yên** + Slogan *"Uy tín – An tâm – Mua nhanh – Bán lẹ"* + Thanh tìm kiếm nhanh + Nút "Đăng nhập"
-- Bộ lọc nhanh: Loại hình (Đất / Nhà riêng / Căn hộ), Tỉnh/Thành, Khoảng giá, Diện tích
+- Bộ lọc nhanh: Loại hình (🏘️ Đất nền / 🏠 Nhà riêng / 🏢 Căn hộ / 🏡 Biệt thự / 🏬 Nhà mặt phố / 🏭 Thương mại / 🌾 Đất nông nghiệp / 🏗️ Dự án BĐS), Tỉnh/Thành, Khoảng giá, Diện tích
 - Danh sách tin đăng dạng thẻ: ảnh đại diện, tiêu đề, giá, diện tích, vị trí, loại hình
 - Phân trang / Infinite scroll
 - Footer
@@ -123,7 +123,7 @@
 **Hiển thị:**
 - Thanh search với từ khoá hiện tại
 - Bộ lọc nâng cao:
-  - Loại hình: Đất / Nhà riêng / Căn hộ
+  - Loại hình: 🏘️ Đất nền / Đất thổ cư | 🏠 Nhà riêng / Nhà phố | 🏢 Căn hộ chung cư | 🏡 Biệt thự / Nhà liền kề | 🏬 Nhà mặt phố / Mặt tiền | 🏭 Thương mại (Văn phòng / Mặt bằng KD / Kho xưởng) | 🌾 Đất nông nghiệp | 🏗️ Dự án BĐS
   - Tỉnh / Quận / Phường (địa chỉ cũ và mới)
   - Khoảng giá (từ - đến)
   - Diện tích (từ - đến)
@@ -144,9 +144,16 @@
 **Hiển thị:**
 - Carousel ảnh (vuốt / bấm xem fullscreen)
 - Tiêu đề, Giá bán, Giá/m², Diện tích
-- Loại hình, Pháp lý, Mặt tiền (m), Đường vào (m), Hướng nhà, Hướng ban công
-- Số phòng ngủ, Số phòng tắm/WC, Số tầng, Nội thất
-- Tên dự án (nếu là căn hộ chung cư)
+- Loại hình, Pháp lý, Hướng nhà, Hướng ban công
+- **Thông tin theo loại hình:**
+  - *Đất nền / Đất thổ cư:* Loại đất, Quy hoạch, Vị trí lô, Mặt tiền (m), Đường vào (m)
+  - *Nhà riêng / Nhà phố:* Số tầng, Diện tích sàn, Mặt tiền (m), Hẻm/Mặt phố, Đường vào (m)
+  - *Căn hộ chung cư:* Tầng số, Tên tòa nhà / Dự án, View, Ban công, Nội thất, Số phòng ngủ, Số phòng tắm/WC
+  - *Biệt thự / Nhà liền kề:* Diện tích đất, Diện tích xây dựng, Số tầng, Sân vườn, Nội thất
+  - *Nhà mặt phố / Mặt tiền:* Số tầng, Diện tích sàn, Mặt tiền (m), Nội thất
+  - *Thương mại:* Công năng, Diện tích sàn, Vị trí tầng, Nội thất
+  - *Đất nông nghiệp:* Loại đất, Quy hoạch, Diện tích
+  - *Dự án BĐS:* Tên dự án, Block/Tầng/Căn, Tiến độ xây dựng
 - Địa chỉ + Bản đồ Google Maps
 - Thông tin Công ty đăng: Logo, tên, SĐT
 - Nút **"GỬI YÊU CẦU TƯ VẤN"** (sticky bottom)
@@ -218,7 +225,7 @@ Dành cho người có tài sản muốn nhờ sàn tìm người mua.
 
 **Hiển thị:**
 - Form điền thông tin tài sản cần bán:
-  - Loại hình: Đất / Nhà riêng / Căn hộ
+  - Loại hình: 🏘️ Đất nền / Đất thổ cư | 🏠 Nhà riêng / Nhà phố | 🏢 Căn hộ chung cư | 🏡 Biệt thự / Nhà liền kề | 🏬 Nhà mặt phố / Mặt tiền | 🏭 Thương mại | 🌾 Đất nông nghiệp | 🏗️ Dự án BĐS
   - Diện tích, Giá mong muốn
   - Địa chỉ
   - Tình trạng pháp lý
@@ -309,11 +316,18 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 
 | Nhóm | Trường thông tin |
 |---|---|
-| **Cơ bản** | Loại hình (Đất / Nhà riêng / Căn hộ), Diện tích (m²), Giá bán, SĐT người bán |
+| **Cơ bản** | Loại hình (🏘️ Đất nền / 🏠 Nhà riêng / 🏢 Căn hộ / 🏡 Biệt thự / 🏬 Nhà mặt phố / 🏭 Thương mại / 🌾 Đất nông nghiệp / 🏗️ Dự án BĐS), Diện tích (m²), Giá bán, SĐT người bán |
 | **Pháp lý** | Sổ đỏ/Sổ hồng / Hợp đồng mua bán / Đang chờ sổ |
 | **Vị trí** | Địa chỉ cũ, Địa chỉ mới (theo tỉnh thành gộp), Tỉnh/Quận/Phường |
 | **Hình ảnh** | Upload nhiều ảnh, kéo thả sắp xếp, ảnh đầu = ảnh đại diện |
-| **Chi tiết** | Nội thất, Số phòng ngủ, Số phòng tắm/WC, Số tầng, Hướng nhà, Hướng ban công, Đường vào (m), Mặt tiền (m), Tên dự án (nếu là căn hộ) |
+| **Đất nền / Đất thổ cư** | Loại đất, Quy hoạch, Vị trí lô, Mặt tiền (m), Đường vào (m) |
+| **Nhà riêng / Nhà phố** | Số tầng, Diện tích sàn, Mặt tiền (m), Hẻm/Mặt phố, Đường vào (m) |
+| **Căn hộ chung cư** | Tầng số, Tên tòa nhà / Dự án, View, Ban công, Nội thất, Số phòng ngủ, Số phòng tắm/WC |
+| **Biệt thự / Nhà liền kề** | Diện tích đất, Diện tích xây dựng, Số tầng, Sân vườn, Nội thất |
+| **Nhà mặt phố / Mặt tiền** | Số tầng, Diện tích sàn, Mặt tiền (m), Nội thất |
+| **Thương mại** | Công năng (Văn phòng / Mặt bằng KD / Kho xưởng), Diện tích sàn, Vị trí tầng, Nội thất |
+| **Đất nông nghiệp** | Loại đất, Quy hoạch, Diện tích |
+| **Dự án BĐS** | Tên dự án, Block/Tầng/Căn, Tiến độ xây dựng |
 
 **Người dùng có thể:**
 - Thêm tài sản mới
@@ -502,7 +516,8 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 #### 🖥️ Màn 9 — Cài Đặt Hệ Thống (Super Admin)
 
 **Admin có thể:**
-- Quản lý danh mục: Loại hình BĐS, Tỉnh/Thành phố, Tình trạng pháp lý
+- Quản lý danh mục loại hình BĐS: 🏘️ Đất nền / Đất thổ cư | 🏠 Nhà riêng / Nhà phố | 🏢 Căn hộ chung cư | 🏡 Biệt thự / Nhà liền kề | 🏬 Nhà mặt phố / Mặt tiền | 🏭 Thương mại (Văn phòng / Mặt bằng KD / Kho xưởng) | 🌾 Đất nông nghiệp | 🏗️ Dự án BĐS
+- Quản lý danh mục Tỉnh/Thành phố, Tình trạng pháp lý
 - Cài đặt thời gian job tự động nhắc nhở
 - Quản lý email template
 - Quản lý tài khoản Admin (tạo, khoá, xoá) — chỉ Super Admin
@@ -580,7 +595,7 @@ Bắt buộc khi đăng nhập lần đầu với tài khoản do Admin cấp.
 |---|---|---|
 | 1 | Xem danh sách BĐS trên trang chủ | ❌ |
 | 2 | Tìm kiếm theo từ khoá | ❌ |
-| 3 | Lọc theo loại hình, tỉnh/thành, giá, diện tích, pháp lý | ❌ |
+| 3 | Lọc theo loại hình BĐS (Đất nền / Nhà riêng / Căn hộ / Biệt thự / Nhà mặt phố / Thương mại / Đất nông nghiệp / Dự án BĐS), tỉnh/thành, giá, diện tích, pháp lý | ❌ |
 | 4 | Chuyển đổi xem dạng Danh sách / Bản đồ | ❌ |
 | 5 | Xem chi tiết BĐS (ảnh, thông tin đầy đủ, bản đồ) | ❌ |
 | 6 | Chia sẻ link tin đăng | ❌ |
@@ -736,10 +751,39 @@ bds-nen-platform/
 - ✅ Company Portal cho Công ty BĐS
 - ✅ Admin System vận hành
 
-### Phase 2 — Mở rộng (2-3 tháng tới)
-- 🔜 Nhận ký gửi từ chủ đất cá nhân
-- 🔜 Module đội sales nội bộ tư vấn trực tiếp
-- 🔜 Báo cáo nâng cao theo hiệu quả sales
+### Phase 2 — Mở rộng (3-6 tháng tới)
+
+#### 🏗️ Mở rộng loại hình BĐS
+- ✅ Đã có: Đất nền, Nhà riêng, Căn hộ chung cư
+- 🔜 Biệt thự / Nhà liền kề
+- 🔜 Nhà mặt phố / Mặt tiền
+- 🔜 Bất động sản thương mại (Văn phòng, Mặt bằng KD, Kho xưởng)
+- 🔜 Đất nông nghiệp / Trang trại
+- 🔜 Dự án BĐS (theo dự án, từng block/tầng/căn)
+
+#### 👥 Nâng cấp người dùng
+- 🔜 Module đội sales nội bộ — tư vấn và chăm sóc khách hàng trực tiếp
+- 🔜 Hệ thống đánh giá / review Công ty BĐS từ người dùng
+- 🔜 Yêu thích / Lưu tin đăng để xem lại sau
+- 🔜 So sánh BĐS (so sánh 2-3 tin cùng lúc)
+- 🔜 Thông báo push khi có tin đăng mới phù hợp với bộ lọc đã lưu
+
+#### 🏢 Nâng cấp Company Portal
+- 🔜 Quản lý nhiều chi nhánh / nhân viên sale trong cùng 1 tài khoản
+- 🔜 Phân công đơn tư vấn cho từng nhân viên
+- 🔜 Báo cáo hiệu quả từng nhân viên sale
+- 🔜 CRM nội bộ: quản lý lịch sử tương tác với từng khách hàng
+
+#### 📊 Nâng cấp Admin & Báo cáo
+- 🔜 Báo cáo nâng cao: tỷ lệ chuyển đổi theo loại hình BĐS, theo khu vực
+- 🔜 Heatmap thị trường BĐS theo địa bàn
+- 🔜 Tích hợp Google Analytics / tracking hành vi người dùng
+- 🔜 Module nhận ký gửi từ chủ đất cá nhân (quy trình đầy đủ)
+
+#### 💳 Thanh toán & Gói dịch vụ
+- 🔜 Hệ thống gói dịch vụ trả phí cho Công ty BĐS (Cơ bản / Chuyên nghiệp / Doanh nghiệp)
+- 🔜 Tin đăng nổi bật / ưu tiên hiển thị
+- 🔜 Tích hợp cổng thanh toán (VNPay / MoMo / Chuyển khoản)
 
 ---
 
