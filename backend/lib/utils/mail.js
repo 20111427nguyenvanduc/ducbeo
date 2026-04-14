@@ -1,3 +1,4 @@
+// Note: `_` (lodash), `config`, `logger` are set as globals in index.js before this module is used.
 const nodemailer = require('nodemailer');
 
 const createTransporter = () => {

@@ -1,3 +1,5 @@
+// Note: `logger`, `io`, `moment`, `NotificationModel`, `CompanyUserModel`, `PropertyModel`, `CompanyModel`
+// are set as globals in index.js before this module is used.
 const { NOTIFICATION_TYPE, USER_TYPE } = require('../const');
 
 /**

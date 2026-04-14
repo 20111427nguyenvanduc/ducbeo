@@ -1,3 +1,4 @@
+// Note: `_` (lodash), `config`, `logger`, `moment` are set as globals in index.js before this module is used.
 const twilio = require('twilio');
 
 const getClient = () => {

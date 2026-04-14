@@ -1,3 +1,4 @@
+// Note: `_` (lodash), `config` are set as globals in index.js before this module is used.
 const jwt = require('jsonwebtoken');
 
 const getSecret = () => _.get(config, 'jwt.secret', process.env.JWT_SECRET || 'bdshy-default-secret');

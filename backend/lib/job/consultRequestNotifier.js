@@ -1,3 +1,5 @@
+// Note: `logger`, `io`, `moment`, `ConsultRequestModel`, `CompanyUserModel`, `ListingModel`
+// are set as globals in index.js before this module is used.
 const cron = require('node-cron');
 const { CONSULT_STATUS } = require('../const');
 
