@@ -1,0 +1,41 @@
+{
+  "name": "bdshy-service",
+  "version": "1.0.0",
+  "description": "Backend API - Sàn Bất Động Sản Hưng Yên",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "async": "^3.2.4",
+    "axios": "^1.12.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cloudinary": "^2.4.0",
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "mongoose": "^5.13.21",
+    "ms": "^2.1.3",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.5",
+    "redis": "^2.8.0",
+    "socket.io": "^4.8.3",
+    "twilio": "^5.0.0",
+    "uuid": "^11.1.0",
+    "validator": "^13.15.15",
+    "winston": "^2.4.6",
+    "winston-daily-rotate-file": "^3.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
