@@ -34,7 +34,14 @@ var server = http.Server(app)
 global.io = require('socket.io')(server, { cors: { origin: '*' } })
 
 app.set('trust proxy', true)
-app.use(cors({ origin: '*', credentials: true }))
+var allowedOrigins = config.get('allowedOrigins') || []
+app.use(cors({
+  origin: function(origin, cb) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) return cb(null, true)
+    return cb(null, false)
+  },
+  credentials: true,
+}))
 app.use(bodyParser.json({ limit: '50mb' }))
 app.use(express.static('public'))
 
