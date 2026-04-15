@@ -1,35 +1,23 @@
-const TokenUtil = require('../utils/token');
-const Message = require('../message');
+'use strict'
+var TokenUtil = require('../utils/token')
+var Message = require('../message')
 
-module.exports = async (req, res, next) => {
-  try {
-    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
-    if (!authHeader) {
-      return res.json({ success: false, message: Message.UNAUTHORIZED });
-    }
+module.exports = function(req, res, next) {
+  var token = _.get(req, 'headers.token') || _.get(req, 'body.token')
+  var appName = config.get('cmsAppName')
+  if (!token) return res.json({ code: 401, message: Message.UNAUTHORIZED })
 
-    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
-    const decoded = TokenUtil.verifyAccessToken(token);
+  TokenUtil.getToken(appName, token, function(err, data) {
+    if (err || !data) return res.json({ code: 1993, message: Message.TOKEN_EXPIRED })
 
-    if (!decoded || decoded.type !== 'admin') {
-      return res.json({ success: false, message: Message.TOKEN_INVALID });
-    }
-
-    const admin = await AdminModel.findById(decoded.id);
-    if (!admin) {
-      return res.json({ success: false, message: Message.ACCOUNT_NOT_FOUND });
-    }
-
-    if (!admin.isActive) {
-      return res.json({ success: false, message: Message.ACCOUNT_LOCKED });
-    }
-
-    req.admin = admin;
-    next();
-  } catch (err) {
-    if (err.name === 'TokenExpiredError') {
-      return res.json({ success: false, message: Message.TOKEN_EXPIRED });
-    }
-    return res.json({ success: false, message: Message.TOKEN_INVALID });
-  }
-};
+    AdminModel.findById(data.userId, function(err, admin) {
+      if (err || !admin) return res.json({ code: 401, message: Message.ACCOUNT_NOT_FOUND })
+      if (!admin.isActive) return res.json({ code: 403, message: Message.ACCOUNT_LOCKED })
+      req.admin = admin
+      req.userId = admin._id
+      req.token = token
+      req.appName = appName
+      next()
+    })
+  })
+}

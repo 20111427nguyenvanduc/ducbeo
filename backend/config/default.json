@@ -1,5 +1,8 @@
 {
   "port": 3000,
+  "appName": "bdshy",
+  "companyAppName": "bdshy-company",
+  "cmsAppName": "bdshy-cms",
   "allowedOrigins": [
     "http://localhost:3000",
     "http://localhost:3001",
@@ -15,11 +18,6 @@
     "host": "localhost",
     "port": 6379,
     "password": ""
-  },
-  "jwt": {
-    "secret": "bdshy-secret-key-development",
-    "accessExpiry": "1h",
-    "refreshExpiry": "7d"
   },
   "cloudinary": {
     "cloudName": "",
@@ -39,7 +37,8 @@
     "from": "noreply@bdshy.vn"
   },
   "otp": {
-    "expireMinutes": 5
+    "expireSeconds": 300
   },
+  "tokenExpireSeconds": 604800,
   "logLevel": "info"
 }

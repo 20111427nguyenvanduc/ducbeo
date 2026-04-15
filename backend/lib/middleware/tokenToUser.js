@@ -1,35 +1,24 @@
-const TokenUtil = require('../utils/token');
-const Message = require('../message');
+'use strict'
+var TokenUtil = require('../utils/token')
+var Message = require('../message')
 
-module.exports = async (req, res, next) => {
-  try {
-    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
-    if (!authHeader) {
-      return res.json({ success: false, message: Message.UNAUTHORIZED });
-    }
+module.exports = function(req, res, next) {
+  var token = _.get(req, 'headers.token') || _.get(req, 'body.token')
+  var appName = config.get('appName')
+  if (!token) return res.json({ code: 401, message: Message.UNAUTHORIZED })
 
-    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
-    const decoded = TokenUtil.verifyAccessToken(token);
+  TokenUtil.getToken(appName, token, function(err, data) {
+    if (err || !data) return res.json({ code: 1993, message: Message.TOKEN_EXPIRED })
 
-    if (!decoded || decoded.type !== 'member') {
-      return res.json({ success: false, message: Message.TOKEN_INVALID });
-    }
-
-    const member = await MemberModel.findById(decoded.id);
-    if (!member) {
-      return res.json({ success: false, message: Message.MEMBER_NOT_FOUND });
-    }
-
-    if (!member.isActive) {
-      return res.json({ success: false, message: Message.ACCOUNT_LOCKED });
-    }
-
-    req.member = member;
-    next();
-  } catch (err) {
-    if (err.name === 'TokenExpiredError') {
-      return res.json({ success: false, message: Message.TOKEN_EXPIRED });
-    }
-    return res.json({ success: false, message: Message.TOKEN_INVALID });
-  }
-};
+    MemberModel.findById(data.userId, function(err, member) {
+      if (err || !member) return res.json({ code: 401, message: Message.MEMBER_NOT_FOUND })
+      if (!member.isActive) return res.json({ code: 403, message: Message.ACCOUNT_LOCKED })
+      req.user = member
+      req.member = member
+      req.userId = member._id
+      req.token = token
+      req.appName = appName
+      next()
+    })
+  })
+}
