@@ -1,39 +1,34 @@
-// Note: `_` (lodash), `config` are set as globals in index.js before this module is used.
-const jwt = require('jsonwebtoken');
+'use strict'
+var crypto = require('crypto')
 
-const getSecret = () => _.get(config, 'jwt.secret', process.env.JWT_SECRET || 'bdshy-default-secret');
-const getAccessExpiry = () => _.get(config, 'jwt.accessExpiry', process.env.JWT_ACCESS_EXPIRY || '1h');
-const getRefreshExpiry = () => _.get(config, 'jwt.refreshExpiry', process.env.JWT_REFRESH_EXPIRY || '7d');
+function generateToken() {
+  return crypto.randomBytes(32).toString('hex')
+}
 
-const signAccessToken = (payload) => {
-  return jwt.sign(payload, getSecret(), { expiresIn: getAccessExpiry() });
-};
+function saveToken(appName, token, data, expireSeconds, cb) {
+  var key = appName + ':token:' + token
+  global.redisClient.setex(key, expireSeconds, JSON.stringify(data), function(err) {
+    cb(err)
+  })
+}
 
-const signRefreshToken = (payload) => {
-  return jwt.sign(payload, getSecret(), { expiresIn: getRefreshExpiry() });
-};
+function getToken(appName, token, cb) {
+  var key = appName + ':token:' + token
+  global.redisClient.get(key, function(err, data) {
+    if (err || !data) return cb(null, null)
+    try {
+      cb(null, JSON.parse(data))
+    } catch (e) {
+      cb(null, null)
+    }
+  })
+}
 
-const verifyAccessToken = (token) => {
-  return jwt.verify(token, getSecret());
-};
+function removeToken(appName, token, cb) {
+  var key = appName + ':token:' + token
+  global.redisClient.del(key, function(err) {
+    cb(err)
+  })
+}
 
-const generateMemberToken = (memberId) => {
-  return signAccessToken({ id: memberId, type: 'member' });
-};
-
-const generateCompanyUserToken = (companyUserId) => {
-  return signAccessToken({ id: companyUserId, type: 'company_user' });
-};
-
-const generateAdminToken = (adminId) => {
-  return signAccessToken({ id: adminId, type: 'admin' });
-};
-
-module.exports = {
-  signAccessToken,
-  signRefreshToken,
-  verifyAccessToken,
-  generateMemberToken,
-  generateCompanyUserToken,
-  generateAdminToken,
-};
+module.exports = { generateToken, saveToken, getToken, removeToken }

@@ -1,49 +1,52 @@
-const winston = require('winston');
-require('winston-daily-rotate-file');
-const path = require('path');
-const fs = require('fs');
+'use strict'
+var winston = require('winston')
+require('winston-daily-rotate-file')
+var path = require('path')
+var fs = require('fs')
 
-const Logger = (logDir) => {
+var Logger = function(logDir) {
   if (!fs.existsSync(logDir)) {
-    fs.mkdirSync(logDir, { recursive: true });
+    fs.mkdirSync(logDir, { recursive: true })
   }
 
-  const dailyRotateTransport = new winston.transports.DailyRotateFile({
+  var dailyRotateTransport = new winston.transports.DailyRotateFile({
+    name: 'dailyRotateApp',
     filename: path.join(logDir, 'app-%DATE%.log'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
     maxFiles: '14d',
     level: 'info',
-  });
+  })
 
-  const errorRotateTransport = new winston.transports.DailyRotateFile({
+  var errorRotateTransport = new winston.transports.DailyRotateFile({
+    name: 'dailyRotateError',
     filename: path.join(logDir, 'error-%DATE%.log'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
     maxFiles: '30d',
     level: 'error',
-  });
+  })
 
-  const logger = new winston.Logger({
+  var instance = new winston.Logger({
     transports: [
       new winston.transports.Console({
         level: 'debug',
         colorize: true,
-        timestamp: () => new Date().toISOString(),
+        timestamp: function() { return new Date().toISOString() },
       }),
       dailyRotateTransport,
       errorRotateTransport,
     ],
-  });
+  })
 
-  logger.logInfo = (...args) => logger.info(args.join(' '));
-  logger.logError = (...args) => logger.error(args.join(' '));
-  logger.logWarn = (...args) => logger.warn(args.join(' '));
-  logger.logDebug = (...args) => logger.debug(args.join(' '));
+  instance.logInfo = function() { instance.info(Array.prototype.join.call(arguments, ' ')) }
+  instance.logError = function() { instance.error(Array.prototype.join.call(arguments, ' ')) }
+  instance.logWarn = function() { instance.warn(Array.prototype.join.call(arguments, ' ')) }
+  instance.logDebug = function() { instance.debug(Array.prototype.join.call(arguments, ' ')) }
 
-  return logger;
-};
+  return instance
+}
 
-module.exports = Logger;
+module.exports = Logger

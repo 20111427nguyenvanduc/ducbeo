@@ -1,230 +1,207 @@
-const express = require('express');
-const cors = require('cors');
+'use strict'
+global._ = require('lodash')
+global.config = require('config')
+global.moment = require('moment')
+global.async = require('async')
+global.mongoose = require('mongoose')
 
-global._ = require('lodash');
-global.config = require('config');
-global.Logger = require('./lib/logger');
-global.mongoose = require('mongoose');
-global.fs = require('fs');
-global.moment = require('moment');
-global.async = require('async');
-global.ms = require('ms');
-global.MailUtil = require('./lib/utils/mail');
-global.logger = Logger(`${__dirname}/logs`);
+var Logger = require('./lib/logger')
+global.logger = Logger(__dirname + '/logs')
 
-// MongoDB connection
-require('./lib/connections/mongodb');
+var mongoSetup = require('./lib/connections/mongo')
+var redisSetup = require('./lib/connections/redis')
+mongoSetup(config.get('mongodb.uri'))
+global.redisClient = redisSetup(
+  config.get('redis.host'),
+  config.get('redis.port'),
+  config.get('redis.password')
+)
 
-// Load models
-fs.readdirSync(`${__dirname}/lib/models`).forEach((file) => {
+var fs = require('fs')
+fs.readdirSync(__dirname + '/lib/models').forEach(function(file) {
   if (file.endsWith('.js')) {
-    global[_.upperFirst(_.camelCase(file.replace('.js', 'Model')))] = require(`./lib/models/${file}`);
+    var name = _.upperFirst(_.camelCase(file.replace('.js', ''))) + 'Model'
+    global[name] = require('./lib/models/' + file)
   }
-});
+})
 
-const bodyParser = require('body-parser');
-const tokenToUserMiddleware = require('./lib/middleware/tokenToUser');
-const optionalTokenToUserMiddleware = require('./lib/middleware/optionalTokenToUser');
-const tokenToCompanyUserMiddleware = require('./lib/middleware/tokenToCompanyUser');
-const tokenToAdminMiddleware = require('./lib/middleware/tokenToAdmin');
-const requireSuperAdminMiddleware = require('./lib/middleware/requireSuperAdmin');
+var express = require('express')
+var cors = require('cors')
+var bodyParser = require('body-parser')
+var http = require('http')
+var app = express()
+var server = http.Server(app)
+global.io = require('socket.io')(server, { cors: { origin: '*' } })
 
-const app = express();
-app.set('trust proxy', true);
-const server = require('http').Server(app);
-global.io = require('socket.io')(server, { cors: { origin: '*' } });
+app.set('trust proxy', true)
+app.use(cors({ origin: '*', credentials: true }))
+app.use(bodyParser.json({ limit: '50mb' }))
+app.use(express.static('public'))
 
-// CORS
-const allowedOrigins = _.get(config, 'allowedOrigins', []);
-app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
-    return cb(null, false);
-  },
-  credentials: true,
-}));
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(express.static('public'));
+function declareRoute(method, routeName, middlewares, destinationRoute) {
+  if (!destinationRoute || !routeName) return
+  Object.keys(destinationRoute).forEach(function(version) {
+    app[method]('/api/' + version + routeName, middlewares, destinationRoute[version])
+  })
+}
 
-const declareRoute = (method, routeName, middlewares = [], destinationRoute) => {
-  if (!destinationRoute || !routeName) return;
-  Object.keys(destinationRoute).forEach((version) => {
-    app[method](`/api/${version}${routeName}`, middlewares, destinationRoute[version]);
-  });
-};
+var tokenToUser = require('./lib/middleware/tokenToUser')
+var tokenToCompanyUser = require('./lib/middleware/tokenToCompanyUser')
+var tokenToAdmin = require('./lib/middleware/tokenToAdmin')
+var requireSuperAdmin = require('./lib/middleware/requireSuperAdmin')
 
-// ─── Auth (Member) ───────────────────────────────────────────────────────────
-const authRoute = require('./lib/routes/auth');
-declareRoute('post', '/auth/send-otp', [], authRoute.sendOtp);
-declareRoute('post', '/auth/verify-otp', [], authRoute.verifyOtp);
-declareRoute('post', '/auth/logout', [tokenToUserMiddleware], authRoute.logout);
-declareRoute('post', '/auth/change-password', [tokenToUserMiddleware], authRoute.changePassword);
+// ─── Auth (Member) ────────────────────────────────────────────────────────────
+var authRoute = require('./lib/routes/auth')
+declareRoute('post', '/auth/send-otp', [], authRoute.sendOtp)
+declareRoute('post', '/auth/verify-otp', [], authRoute.verifyOtp)
+declareRoute('post', '/auth/logout', [tokenToUser], authRoute.logout)
 
-// ─── Member ──────────────────────────────────────────────────────────────────
-const memberRoute = require('./lib/routes/member');
-declareRoute('get', '/member/me', [tokenToUserMiddleware], memberRoute.get);
-declareRoute('put', '/member/me', [tokenToUserMiddleware], memberRoute.update);
+// ─── Listing (public) ─────────────────────────────────────────────────────────
+var listingRoute = require('./lib/routes/listing')
+declareRoute('post', '/listing/list', [], listingRoute.list)
+declareRoute('get', '/listing/detail/:id', [], listingRoute.detail)
 
-// ─── Listing (public) ────────────────────────────────────────────────────────
-const listingRoute = require('./lib/routes/listing');
-declareRoute('post', '/listing/list', [optionalTokenToUserMiddleware], listingRoute.list);
-declareRoute('get', '/listing/:id', [optionalTokenToUserMiddleware], listingRoute.detail);
+// ─── Address (public) ─────────────────────────────────────────────────────────
+var addressRoute = require('./lib/routes/address')
+declareRoute('post', '/address/list-province', [], addressRoute.listProvince)
+declareRoute('post', '/address/list-district', [], addressRoute.listDistrict)
+declareRoute('post', '/address/list-ward', [], addressRoute.listWard)
+
+// ─── App Config (public) ──────────────────────────────────────────────────────
+var appRoute = require('./lib/routes/app')
+declareRoute('post', '/app/get-config', [], appRoute.getConfig)
+declareRoute('post', '/app/get-banners', [], appRoute.getBanners)
+
+// ─── Company (public) ─────────────────────────────────────────────────────────
+var companyRoute = require('./lib/routes/company')
+declareRoute('get', '/company/detail', [], companyRoute.detail)
+
+// ─── Member (tokenToUser) ─────────────────────────────────────────────────────
+var memberRoute = require('./lib/routes/member')
+declareRoute('get', '/member/profile', [tokenToUser], memberRoute.profile)
+declareRoute('put', '/member/update-profile', [tokenToUser], memberRoute.updateProfile)
 
 // ─── ConsultRequest (member) ──────────────────────────────────────────────────
-const consultRequestRoute = require('./lib/routes/consultRequest');
-declareRoute('post', '/consult-request', [tokenToUserMiddleware], consultRequestRoute.create);
-declareRoute('get', '/consult-request', [tokenToUserMiddleware], consultRequestRoute.list);
-declareRoute('get', '/consult-request/:id', [tokenToUserMiddleware], consultRequestRoute.detail);
+var consultRequestRoute = require('./lib/routes/consultRequest')
+declareRoute('post', '/consult-request/create', [tokenToUser], consultRequestRoute.create)
+declareRoute('get', '/consult-request/list', [tokenToUser], consultRequestRoute.list)
+declareRoute('get', '/consult-request/detail/:id', [tokenToUser], consultRequestRoute.detail)
 
 // ─── ConsignRequest (member) ──────────────────────────────────────────────────
-const consignRequestRoute = require('./lib/routes/consignRequest');
-declareRoute('post', '/consign-request', [tokenToUserMiddleware], consignRequestRoute.create);
+var consignRequestRoute = require('./lib/routes/consignRequest')
+declareRoute('post', '/consign-request/create', [tokenToUser], consignRequestRoute.create)
 
 // ─── Notification (member) ────────────────────────────────────────────────────
-const notificationRoute = require('./lib/routes/notification');
-declareRoute('get', '/notification', [tokenToUserMiddleware], notificationRoute.list);
-declareRoute('put', '/notification/:id/seen', [tokenToUserMiddleware], notificationRoute.seen);
-declareRoute('put', '/notification/seen-all', [tokenToUserMiddleware], notificationRoute.seenAll);
-declareRoute('get', '/notification/count', [tokenToUserMiddleware], notificationRoute.count);
+var notificationRoute = require('./lib/routes/notification')
+declareRoute('post', '/notification/list', [tokenToUser], notificationRoute.list)
+declareRoute('post', '/notification/seen', [tokenToUser], notificationRoute.seen)
+declareRoute('post', '/notification/count-unread', [tokenToUser], notificationRoute.countUnread)
 
-// ─── Push Notify (member) ────────────────────────────────────────────────────
-const pushNotifyRoute = require('./lib/routes/pushNotify');
-declareRoute('post', '/push-notify/token', [tokenToUserMiddleware], pushNotifyRoute.addToken);
+// ─── Push Notify (member) ─────────────────────────────────────────────────────
+var pushNotifyRoute = require('./lib/routes/pushNotify')
+declareRoute('post', '/push-notify/add-token', [tokenToUser], pushNotifyRoute.addToken)
 
-// ─── Address (public) ────────────────────────────────────────────────────────
-const addressRoute = require('./lib/routes/address');
-declareRoute('get', '/address/province', [], addressRoute.listProvince);
-declareRoute('get', '/address/district', [], addressRoute.listDistrict);
-declareRoute('get', '/address/ward', [], addressRoute.listWard);
-
-// ─── App Config (public) ─────────────────────────────────────────────────────
-const appRoute = require('./lib/routes/app');
-declareRoute('get', '/app/config', [], appRoute.getConfig);
-
-// ─── Company (public) ────────────────────────────────────────────────────────
-const companyRoute = require('./lib/routes/company');
-declareRoute('get', '/company/:domain', [], companyRoute.detail);
-
-// ─── Company Auth ────────────────────────────────────────────────────────────
-const companyAuthRoute = require('./lib/routes/companyAuth');
-declareRoute('post', '/company-auth/login', [], companyAuthRoute.login);
-declareRoute('post', '/company-auth/logout', [tokenToCompanyUserMiddleware], companyAuthRoute.logout);
-declareRoute('post', '/company-auth/change-password', [tokenToCompanyUserMiddleware], companyAuthRoute.changePassword);
-declareRoute('post', '/company-auth/forgot-password-request', [], companyAuthRoute.forgotPasswordRequest);
-declareRoute('post', '/company-auth/forgot-password-confirm', [], companyAuthRoute.forgotPasswordConfirm);
-declareRoute('post', '/company-auth/change-first-password', [tokenToCompanyUserMiddleware], companyAuthRoute.changeFirstPassword);
-
-// ─── Company Property ────────────────────────────────────────────────────────
-const companyPropertyRoute = require('./lib/routes/companyProperty');
-declareRoute('post', '/company/property', [tokenToCompanyUserMiddleware], companyPropertyRoute.create);
-declareRoute('get', '/company/property', [tokenToCompanyUserMiddleware], companyPropertyRoute.list);
-declareRoute('get', '/company/property/:id', [tokenToCompanyUserMiddleware], companyPropertyRoute.detail);
-declareRoute('put', '/company/property/:id', [tokenToCompanyUserMiddleware], companyPropertyRoute.update);
-declareRoute('delete', '/company/property/:id', [tokenToCompanyUserMiddleware], companyPropertyRoute.remove);
-
-// ─── Company Listing ─────────────────────────────────────────────────────────
-const companyListingRoute = require('./lib/routes/companyListing');
-declareRoute('post', '/company/listing', [tokenToCompanyUserMiddleware], companyListingRoute.create);
-declareRoute('get', '/company/listing', [tokenToCompanyUserMiddleware], companyListingRoute.list);
-declareRoute('get', '/company/listing/:id', [tokenToCompanyUserMiddleware], companyListingRoute.detail);
-declareRoute('put', '/company/listing/:id', [tokenToCompanyUserMiddleware], companyListingRoute.update);
-declareRoute('delete', '/company/listing/:id', [tokenToCompanyUserMiddleware], companyListingRoute.remove);
-declareRoute('post', '/company/listing/:id/extend', [tokenToCompanyUserMiddleware], companyListingRoute.extend);
-
-// ─── Company Consult Request ──────────────────────────────────────────────────
-const companyConsultRequestRoute = require('./lib/routes/companyConsultRequest');
-declareRoute('get', '/company/consult-request', [tokenToCompanyUserMiddleware], companyConsultRequestRoute.list);
-declareRoute('get', '/company/consult-request/:id', [tokenToCompanyUserMiddleware], companyConsultRequestRoute.detail);
-declareRoute('put', '/company/consult-request/:id/status', [tokenToCompanyUserMiddleware], companyConsultRequestRoute.updateStatus);
-declareRoute('post', '/company/consult-request/:id/note', [tokenToCompanyUserMiddleware], companyConsultRequestRoute.addNote);
+// ─── Company Auth ─────────────────────────────────────────────────────────────
+var companyAuthRoute = require('./lib/routes/companyAuth')
+declareRoute('post', '/company/auth/login', [], companyAuthRoute.login)
+declareRoute('post', '/company/auth/logout', [tokenToCompanyUser], companyAuthRoute.logout)
+declareRoute('post', '/company/auth/change-password', [tokenToCompanyUser], companyAuthRoute.changePassword)
 
 // ─── Company Dashboard ────────────────────────────────────────────────────────
-const companyDashboardRoute = require('./lib/routes/companyDashboard');
-declareRoute('get', '/company/dashboard', [tokenToCompanyUserMiddleware], companyDashboardRoute.stats);
+var companyDashboardRoute = require('./lib/routes/companyDashboard')
+declareRoute('get', '/company/dashboard/stats', [tokenToCompanyUser], companyDashboardRoute.stats)
+
+// ─── Company Property ─────────────────────────────────────────────────────────
+var companyPropertyRoute = require('./lib/routes/companyProperty')
+declareRoute('get', '/company/property/list', [tokenToCompanyUser], companyPropertyRoute.list)
+declareRoute('post', '/company/property/create', [tokenToCompanyUser], companyPropertyRoute.create)
+declareRoute('put', '/company/property/update', [tokenToCompanyUser], companyPropertyRoute.update)
+declareRoute('delete', '/company/property/delete', [tokenToCompanyUser], companyPropertyRoute.delete)
+declareRoute('get', '/company/property/detail/:id', [tokenToCompanyUser], companyPropertyRoute.detail)
+
+// ─── Company Listing ──────────────────────────────────────────────────────────
+var companyListingRoute = require('./lib/routes/companyListing')
+declareRoute('get', '/company/listing/list', [tokenToCompanyUser], companyListingRoute.list)
+declareRoute('post', '/company/listing/create', [tokenToCompanyUser], companyListingRoute.create)
+declareRoute('put', '/company/listing/update', [tokenToCompanyUser], companyListingRoute.update)
+declareRoute('delete', '/company/listing/delete', [tokenToCompanyUser], companyListingRoute.delete)
+declareRoute('get', '/company/listing/detail/:id', [tokenToCompanyUser], companyListingRoute.detail)
+
+// ─── Company ConsultRequest ───────────────────────────────────────────────────
+var companyConsultRequestRoute = require('./lib/routes/companyConsultRequest')
+declareRoute('get', '/company/consult-request/list', [tokenToCompanyUser], companyConsultRequestRoute.list)
+declareRoute('get', '/company/consult-request/detail/:id', [tokenToCompanyUser], companyConsultRequestRoute.detail)
+declareRoute('post', '/company/consult-request/update-status', [tokenToCompanyUser], companyConsultRequestRoute.updateStatus)
+declareRoute('post', '/company/consult-request/add-note', [tokenToCompanyUser], companyConsultRequestRoute.addNote)
 
 // ─── Admin Auth ───────────────────────────────────────────────────────────────
-const adminAuthRoute = require('./lib/routes/admin/auth');
-declareRoute('post', '/admin/auth/login', [], adminAuthRoute.login);
-declareRoute('post', '/admin/auth/logout', [tokenToAdminMiddleware], adminAuthRoute.logout);
-declareRoute('post', '/admin/auth/change-password', [tokenToAdminMiddleware], adminAuthRoute.changePassword);
-declareRoute('get', '/admin/auth/me', [tokenToAdminMiddleware], adminAuthRoute.get);
-
-// ─── Admin Company ────────────────────────────────────────────────────────────
-const adminCompanyRoute = require('./lib/routes/admin/company');
-declareRoute('post', '/admin/company', [tokenToAdminMiddleware], adminCompanyRoute.create);
-declareRoute('get', '/admin/company', [tokenToAdminMiddleware], adminCompanyRoute.list);
-declareRoute('get', '/admin/company/:id', [tokenToAdminMiddleware], adminCompanyRoute.detail);
-declareRoute('put', '/admin/company/:id', [tokenToAdminMiddleware], adminCompanyRoute.update);
-declareRoute('put', '/admin/company/:id/lock', [tokenToAdminMiddleware], adminCompanyRoute.lockUnlock);
-declareRoute('delete', '/admin/company/:id', [tokenToAdminMiddleware], adminCompanyRoute.remove);
-
-// ─── Admin Member ─────────────────────────────────────────────────────────────
-const adminMemberRoute = require('./lib/routes/admin/member');
-declareRoute('get', '/admin/member', [tokenToAdminMiddleware], adminMemberRoute.list);
-declareRoute('get', '/admin/member/count', [tokenToAdminMiddleware], adminMemberRoute.count);
-declareRoute('get', '/admin/member/:id', [tokenToAdminMiddleware], adminMemberRoute.detail);
-declareRoute('put', '/admin/member/:id/lock', [tokenToAdminMiddleware], adminMemberRoute.lockUnlock);
-
-// ─── Admin Listing ────────────────────────────────────────────────────────────
-const adminListingRoute = require('./lib/routes/admin/listing');
-declareRoute('get', '/admin/listing', [tokenToAdminMiddleware], adminListingRoute.list);
-declareRoute('get', '/admin/listing/:id', [tokenToAdminMiddleware], adminListingRoute.detail);
-declareRoute('put', '/admin/listing/:id/approve', [tokenToAdminMiddleware], adminListingRoute.approve);
-declareRoute('put', '/admin/listing/:id/reject', [tokenToAdminMiddleware], adminListingRoute.reject);
-declareRoute('delete', '/admin/listing/:id', [tokenToAdminMiddleware], adminListingRoute.remove);
-
-// ─── Admin ConsultRequest ─────────────────────────────────────────────────────
-const adminConsultRequestRoute = require('./lib/routes/admin/consultRequest');
-declareRoute('get', '/admin/consult-request', [tokenToAdminMiddleware], adminConsultRequestRoute.list);
-declareRoute('get', '/admin/consult-request/statistics', [tokenToAdminMiddleware], adminConsultRequestRoute.statistics);
-declareRoute('get', '/admin/consult-request/:id', [tokenToAdminMiddleware], adminConsultRequestRoute.detail);
-declareRoute('post', '/admin/consult-request/:id/reminder', [tokenToAdminMiddleware], adminConsultRequestRoute.sendReminder);
-
-// ─── Admin ConsignRequest ─────────────────────────────────────────────────────
-const adminConsignRequestRoute = require('./lib/routes/admin/consignRequest');
-declareRoute('get', '/admin/consign-request', [tokenToAdminMiddleware], adminConsignRequestRoute.list);
-declareRoute('get', '/admin/consign-request/:id', [tokenToAdminMiddleware], adminConsignRequestRoute.detail);
-declareRoute('put', '/admin/consign-request/:id/status', [tokenToAdminMiddleware], adminConsignRequestRoute.updateStatus);
-
-// ─── Admin Feedback ───────────────────────────────────────────────────────────
-const adminFeedbackRoute = require('./lib/routes/admin/feedback');
-declareRoute('get', '/admin/feedback', [tokenToAdminMiddleware], adminFeedbackRoute.list);
-declareRoute('get', '/admin/feedback/:id', [tokenToAdminMiddleware], adminFeedbackRoute.detail);
-declareRoute('put', '/admin/feedback/:id/resolve', [tokenToAdminMiddleware], adminFeedbackRoute.resolve);
-
-// ─── Admin Banner ─────────────────────────────────────────────────────────────
-const adminBannerRoute = require('./lib/routes/admin/banner');
-declareRoute('post', '/admin/banner', [tokenToAdminMiddleware], adminBannerRoute.create);
-declareRoute('get', '/admin/banner', [tokenToAdminMiddleware], adminBannerRoute.list);
-declareRoute('put', '/admin/banner/:id', [tokenToAdminMiddleware], adminBannerRoute.update);
-declareRoute('delete', '/admin/banner/:id', [tokenToAdminMiddleware], adminBannerRoute.remove);
-declareRoute('put', '/admin/banner/:id/toggle', [tokenToAdminMiddleware], adminBannerRoute.toggleActive);
-
-// ─── Admin PropertyType ───────────────────────────────────────────────────────
-const adminPropertyTypeRoute = require('./lib/routes/admin/propertyType');
-declareRoute('post', '/admin/property-type', [tokenToAdminMiddleware], adminPropertyTypeRoute.create);
-declareRoute('get', '/admin/property-type', [tokenToAdminMiddleware], adminPropertyTypeRoute.list);
-declareRoute('put', '/admin/property-type/:id', [tokenToAdminMiddleware], adminPropertyTypeRoute.update);
-declareRoute('delete', '/admin/property-type/:id', [tokenToAdminMiddleware], adminPropertyTypeRoute.remove);
-declareRoute('put', '/admin/property-type/:id/toggle', [tokenToAdminMiddleware], adminPropertyTypeRoute.toggleActive);
+var adminAuthRoute = require('./lib/routes/admin/auth')
+declareRoute('post', '/admin/auth/login', [], adminAuthRoute.login)
+declareRoute('post', '/admin/auth/logout', [tokenToAdmin], adminAuthRoute.logout)
+declareRoute('post', '/admin/auth/change-password', [tokenToAdmin], adminAuthRoute.changePassword)
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
-const adminDashboardRoute = require('./lib/routes/admin/dashboard');
-declareRoute('get', '/admin/dashboard', [tokenToAdminMiddleware], adminDashboardRoute.stats);
+var adminDashboardRoute = require('./lib/routes/admin/dashboard')
+declareRoute('get', '/admin/dashboard/stats', [tokenToAdmin], adminDashboardRoute.stats)
 
-// ─── Admin System Config (SuperAdmin only) ────────────────────────────────────
-const adminSystemConfigRoute = require('./lib/routes/admin/systemConfig');
-declareRoute('get', '/admin/system-config', [tokenToAdminMiddleware, requireSuperAdminMiddleware], adminSystemConfigRoute.list);
-declareRoute('get', '/admin/system-config/:key', [tokenToAdminMiddleware, requireSuperAdminMiddleware], adminSystemConfigRoute.get);
-declareRoute('post', '/admin/system-config', [tokenToAdminMiddleware, requireSuperAdminMiddleware], adminSystemConfigRoute.add);
-declareRoute('put', '/admin/system-config/:key', [tokenToAdminMiddleware, requireSuperAdminMiddleware], adminSystemConfigRoute.update);
+// ─── Admin Company ────────────────────────────────────────────────────────────
+var adminCompanyRoute = require('./lib/routes/admin/company')
+declareRoute('get', '/admin/company/list', [tokenToAdmin], adminCompanyRoute.list)
+declareRoute('post', '/admin/company/create', [tokenToAdmin, requireSuperAdmin], adminCompanyRoute.create)
+declareRoute('put', '/admin/company/update', [tokenToAdmin], adminCompanyRoute.update)
+declareRoute('delete', '/admin/company/delete', [tokenToAdmin, requireSuperAdmin], adminCompanyRoute.delete)
 
-// ─── Cron jobs ────────────────────────────────────────────────────────────────
-const ConsultRequestNotifier = require('./lib/job/consultRequestNotifier');
-ConsultRequestNotifier.start();
+// ─── Admin Member ─────────────────────────────────────────────────────────────
+var adminMemberRoute = require('./lib/routes/admin/member')
+declareRoute('get', '/admin/member/list', [tokenToAdmin], adminMemberRoute.list)
+declareRoute('get', '/admin/member/detail/:id', [tokenToAdmin], adminMemberRoute.detail)
+declareRoute('post', '/admin/member/lock', [tokenToAdmin], adminMemberRoute.lock)
+
+// ─── Admin Listing ────────────────────────────────────────────────────────────
+var adminListingRoute = require('./lib/routes/admin/listing')
+declareRoute('get', '/admin/listing/list', [tokenToAdmin], adminListingRoute.list)
+declareRoute('get', '/admin/listing/detail/:id', [tokenToAdmin], adminListingRoute.detail)
+declareRoute('post', '/admin/listing/approve', [tokenToAdmin], adminListingRoute.approve)
+declareRoute('post', '/admin/listing/reject', [tokenToAdmin], adminListingRoute.reject)
+declareRoute('delete', '/admin/listing/delete', [tokenToAdmin], adminListingRoute.delete)
+
+// ─── Admin ConsultRequest ─────────────────────────────────────────────────────
+var adminConsultRequestRoute = require('./lib/routes/admin/consultRequest')
+declareRoute('get', '/admin/consult-request/list', [tokenToAdmin], adminConsultRequestRoute.list)
+declareRoute('get', '/admin/consult-request/detail/:id', [tokenToAdmin], adminConsultRequestRoute.detail)
+
+// ─── Admin ConsignRequest ─────────────────────────────────────────────────────
+var adminConsignRequestRoute = require('./lib/routes/admin/consignRequest')
+declareRoute('get', '/admin/consign-request/list', [tokenToAdmin], adminConsignRequestRoute.list)
+declareRoute('get', '/admin/consign-request/detail/:id', [tokenToAdmin], adminConsignRequestRoute.detail)
+declareRoute('post', '/admin/consign-request/update-status', [tokenToAdmin], adminConsignRequestRoute.updateStatus)
+
+// ─── Admin Feedback ───────────────────────────────────────────────────────────
+var adminFeedbackRoute = require('./lib/routes/admin/feedback')
+declareRoute('get', '/admin/feedback/list', [tokenToAdmin], adminFeedbackRoute.list)
+declareRoute('post', '/admin/feedback/resolve', [tokenToAdmin], adminFeedbackRoute.resolve)
+
+// ─── Admin Banner ─────────────────────────────────────────────────────────────
+var adminBannerRoute = require('./lib/routes/admin/banner')
+declareRoute('get', '/admin/banner/list', [tokenToAdmin], adminBannerRoute.list)
+declareRoute('post', '/admin/banner/create', [tokenToAdmin], adminBannerRoute.create)
+declareRoute('put', '/admin/banner/update', [tokenToAdmin], adminBannerRoute.update)
+declareRoute('delete', '/admin/banner/delete', [tokenToAdmin], adminBannerRoute.delete)
+
+// ─── Admin PropertyType ───────────────────────────────────────────────────────
+var adminPropertyTypeRoute = require('./lib/routes/admin/propertyType')
+declareRoute('get', '/admin/property-type/list', [tokenToAdmin], adminPropertyTypeRoute.list)
+declareRoute('post', '/admin/property-type/create', [tokenToAdmin], adminPropertyTypeRoute.create)
+declareRoute('put', '/admin/property-type/update', [tokenToAdmin], adminPropertyTypeRoute.update)
+declareRoute('delete', '/admin/property-type/delete', [tokenToAdmin], adminPropertyTypeRoute.delete)
+
+// ─── Admin System Config ──────────────────────────────────────────────────────
+var adminSystemConfigRoute = require('./lib/routes/admin/systemConfig')
+declareRoute('get', '/admin/system-config/list', [tokenToAdmin, requireSuperAdmin], adminSystemConfigRoute.list)
+declareRoute('put', '/admin/system-config/update', [tokenToAdmin, requireSuperAdmin], adminSystemConfigRoute.update)
 
 // ─── Health check ─────────────────────────────────────────────────────────────
-app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
+app.get('/health', function(req, res) { res.json({ status: 'ok', timestamp: new Date() }) })
 
-const port = _.get(config, 'port', 3000);
-server.listen(port, () => logger.logInfo('Server listening at port:', port));
+var port = config.get('port') || 3000
+server.listen(port, function() { logger.logInfo('Server listening at port:', port) })
