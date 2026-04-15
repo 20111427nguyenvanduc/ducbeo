@@ -207,6 +207,10 @@ var adminSystemConfigRoute = require('./lib/routes/admin/systemConfig')
 declareRoute('get', '/admin/system-config/list', [tokenToAdmin, requireSuperAdmin], adminSystemConfigRoute.list)
 declareRoute('put', '/admin/system-config/update', [tokenToAdmin, requireSuperAdmin], adminSystemConfigRoute.update)
 
+// ─── Cron Jobs ────────────────────────────────────────────────────────────────
+var ConsultRequestNotifier = require('./lib/job/consultRequestNotifier')
+ConsultRequestNotifier.start()
+
 // ─── Health check ─────────────────────────────────────────────────────────────
 app.get('/health', function(req, res) { res.json({ status: 'ok', timestamp: new Date() }) })
 
